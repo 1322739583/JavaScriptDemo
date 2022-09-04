@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script type="text/javascript">
+       var fun=new Function("console.log('This is a function')")
+       fun()
+
+       function fun2() {
+         console.log("This is a function")
+         console.log("Ha ha ha")
+       }
+       fun2()
+
+
+       function add(a,b){
+         var r=a+b
+         return r
+       }
+
+       var result = add(1,2);
+       console.log(result)
+
+       add(1,2)
+       add(true,false)
+       add(1,true)
+       add("abc",123)
+
+       add(1,2,3,"abc")
+       add(123)
+       var result = add(1,2);
+       console.log(result)
+  </script>
+</head>
+<body>
+
+</body>
+</html>

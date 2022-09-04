@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script>
+    //结果为1,true=1,false=0
+    console.log(true+false)
+    //结果为2,true=1
+    console.log(true+1)
+    //转为字符串"123456"
+    console.log("123"+"456")
+    //转为字符串"123456"
+    console.log(123+"456")
+    //任何值和null做加法运算结果都是null，乘法运算null为0
+    console.log(null+1)
+    //NaN
+    console.log(undefined+1)
+    //转为字符串"undefined123"
+    console.log(undefined+"123")
+    //任何数字和NaN做运算，结果还是NaN
+    console.log(NaN+1)
+    //转为字符串"NaN123"
+    console.log(NaN+"123")
+    //输出"33"
+    console.log(1+2+"3")
+    //输出"123"
+    console.log("1"+2+3)
+    //输出99
+    console.log(100-true)
+    //输出99
+    console.log(100-1)
+    //NaN
+    console.log(100-"a")
+    //16
+    console.log(2*"8")
+    //0
+    console.log(2 * null);
+    //NaN
+    console.log(2*undefined)
+    //NaN
+    console.log(2*NaN)
+    //1.5
+    console.log(3/2)
+    //总结任何值做+运算时都自动转化为String，做- * / %时都自动转化为Number。
+    //可以利用这点做隐式类型转化 例如-0 *1 /1,和Number()函数功能一样。
+    //转为数字123
+    console.log("123"-0)
+
+    //这里null转化为0，但%0是错误做法，返回NaN
+    console.log(9%null)
+    //返回NaN
+    console.log(9%undefined)
+    //返回NaN
+    console.log(9%NaN)
+  </script>
+</head>
+<body>
+
+</body>
+</html>

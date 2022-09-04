@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var a=10
+        //数值会转化为boolean
+        console.log(!a)
+        console.log(!!a)
+        //false
+        console.log(true&&false)
+        false&&alert("msg")
+        //true
+        console.log(true||false)
+
+        //两个都是true取后面的值，两个都是false取后面的值
+        //一个true,一个false，取false那个值。
+        //6
+        console.log(5&&6)
+        //0
+        console.log(0&&5)
+        //NaN
+        console.log(NaN&&5)
+        //NaN
+        console.log(5&&NaN)
+        //0
+        console.log(0&&NaN)
+        //NaN
+        console.log(NaN&&0)
+
+        console.log(1||NaN)
+        console.log(NaN||1)
+        console.log(NaN||0)
+        //-1是true,只有0是false
+        console.log(-1||5)
+        //""是false
+        console.log(""||"hello")
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

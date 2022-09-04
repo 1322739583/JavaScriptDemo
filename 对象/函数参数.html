@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script type="text/javascript">
+      function foo(a,b){
+        console.log(a+b)
+      }
+      function boo(a){
+        console.log(a)
+        a(1,2)
+      }
+      boo(foo);
+
+      boo(function f(){alert("abc")})
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

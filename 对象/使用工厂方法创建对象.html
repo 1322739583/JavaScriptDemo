@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script type="text/javascript">
+
+      function creatPerson(name,age){
+               var obj=new Object()
+               obj.name=name
+               obj.age=age
+
+               obj.toString=function(){
+                   return "name:"+name+",age:"+age
+               }
+               return obj
+      }
+
+      var p1 = creatPerson("Tom",23);
+      var p2 = creatPerson("Jack",25);
+      console.log(p1.toString());
+      console.log(p2.toString());
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

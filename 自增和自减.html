@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script>
+    var a=1;
+    //1
+    console.log(a++)
+    //3
+    console.log(++a)
+    var d=20
+    //先算d++,d取20（和输出类似），++d取22（和输出类似），最后的取22，所以结果是64
+    console.log(d++ + ++d +d)
+
+    var c=20;
+    c=c++;
+    //输出20，等价于 d=c++;c=d;
+    console.log(c)
+
+    var e=10
+    console.log(e--)
+  </script>
+</head>
+<body>
+
+</body>
+</html>

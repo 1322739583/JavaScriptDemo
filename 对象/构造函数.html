@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type="text/javascript">
+            function Person(name,age){
+                this.name=name
+                this.age=age
+            }
+
+            Person.prototype.toString=function(){
+                //this指Person实例
+                return "name:"+this.name+" age:"+this.age
+            }
+
+            function toString(name,age){
+                return "name:"+name+" age:"+age
+            }
+
+            function Dog(name,age){
+                this.name=name
+                this.age=age
+
+            }
+
+            var p=new Person("Jack",23)
+            var d=new Dog("Tom",10)
+
+            console.log(p.toString());
+            console.log(Person.prototype.name)
+            d.toString()
+          //  console.log(d)
+            console.log(p.__proto__==Person.prototype)
+
+            Person.prototype.gender="male"
+            console.log(p.__proto__.gender)
+
+            console.log("gender" in p);
+            console.log(p.hasOwnProperty("gender"));
+
+            console.log(p.hasOwnProperty("hasOwnProperty"));
+            console.log(p.__proto__.hasOwnProperty("hasOwnProperty"));
+            console.log(p.__proto__.__proto__.hasOwnProperty("hasOwnProperty"));
+
+            console.log(p.__proto__.__proto__.__proto__);
+
+    </script>
+
+
+</head>
+<body>
+
+</body>
+</html>
