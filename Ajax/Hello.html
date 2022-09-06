@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script type="text/javascript">
+
+  </script>
+</head>
+<body>
+   <button id="btnSend">发送请求</button>
+   <script type="text/javascript">
+     var btn = document.getElementById("btnSend");
+     btn.onclick=function (){
+       var xhr = new XMLHttpRequest();
+       xhr.open("GET","https://www.baidu.com")
+       xhr.send()
+       xhr.onreadystatechange=function (){
+         if (xhr.readyState==4){
+           if (xhr.status>=200&&xhr.status<300){
+             console.log(xhr.status);
+             console.log(xhr.statusText);
+             console.log(xhr.getAllResponseHeaders());
+             console.log(xhr.response);
+           }else {
+             console.log("发生了错误")
+           }
+         }
+       }
+     }
+   </script>
+</body>
+</html>
