@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+  <div id="box">
+
+  </div>
+
+  <script type="text/javascript">
+      var box = document.getElementById("box");
+      for (var i = 0; i < 10; i++) {
+          var btn = document.createElement("button");
+          btn.innerHTML="按钮"+i
+          btn.onclick=function (){
+              console.log(i)
+          }
+          box.appendChild(btn)
+      }
+   </script>
+</body>
+</html>

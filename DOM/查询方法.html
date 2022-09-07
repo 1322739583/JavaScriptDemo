@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<!--1.getElementById     -->
+<!--     <span id="hello">Hello DOM</span>-->
+<!--     <script type="text/javascript">-->
+<!--         var span=document.getElementById("hello")-->
+<!--         console.log(span.innerHTML)-->
+<!--     </script>-->
+
+
+<!--2.getElementById     -->
+<!--<ul>-->
+<!--    <li>1</li>-->
+<!--    <li>2</li>-->
+<!--    <li>3</li>-->
+<!--    <li>4</li>-->
+<!--    <li>5</li>-->
+<!--</ul>-->
+<!--<script type="text/javascript">-->
+<!--    var tagName = document.getElementsByTagName("li");-->
+<!--    for (let i = 0; i < tagName.length; i++) {-->
+<!--        console.log(tagName[i].innerHTML)-->
+<!--    }-->
+<!--    console.log(tagName);-->
+<!--</script>-->
+
+<!--3.getElementsByName-->
+<input class="input1" type="radio" name="gender" value="male"/>男
+<input class="input2" type="radio" name="gender" value="female"/>女
+<script type="text/javascript">
+    var byName = document.getElementsByName("gender");
+    for (let i = 0; i < byName.length; i++) {
+        console.log(byName[i].value)
+        console.log(byName[i].type)
+        console.log(byName[i].name)
+        console.log(byName[i].className)
+        console.log('...........')
+    }
+</script>
+</body>
+</html>

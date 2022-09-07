@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function fun(v1,v2) {
+           console.log(this)
+            console.log("fun")
+           console.log(v1)
+           console.log(v2)
+        }
+
+        var obj = {
+            a: 10
+        }
+        fun.apply(obj,[1,2])
+    </script>
+</head>
+<body>
+
+</body>
+</html>
