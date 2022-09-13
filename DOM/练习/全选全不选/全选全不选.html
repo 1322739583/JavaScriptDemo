@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="#" method="post">
+    喜欢下面的哪种运动？<input type="checkbox" value="全选/全不选" id="checkAllOrNone">全选/全不选<br>
+    <input type="checkbox" value="乒乓球" name="item">乒乓球
+    <input type="checkbox" value="足球" name="item">足球
+    <input type="checkbox" value="篮球" name="item">篮球
+    <input type="checkbox" value="羽毛球" name="item">羽毛球<br>
+    <input type="button" value="全选" id="btnAll">
+    <input type="button" value="全不选" id="btnNone">
+    <input type="button" value="反选" id="btnReverse">
+    <input type="button" value="提交" id="btnSubmit">
+</form>
+
+<script type="text/javascript">
+    var btnAll = document.getElementById("btnAll");
+    var btnNone = document.getElementById("btnNone");
+    var btnReverse = document.getElementById("btnReverse");
+    var btnSubmit = document.getElementById("btnSubmit");
+    var checkAllOrNone = document.getElementById("checkAllOrNone");
+    let items = document.getElementsByName("item");
+
+  //  console.log(typeof items[0].checked);
+
+
+
+    let checkStatus=[0,0,0,0]
+    let isAllChecked=false;
+    for (var i = 0; i < checkStatus.length; i++) {
+         console.log(checkStatus[i])
+       // console.log(typeof status[i]);
+    }
+    console.log("..........")
+
+    for (let i = 0; i < items.length; i++) {
+        items[i].onchange=function (){
+            console.log("is on change");
+            //转为数字
+            checkStatus[i]=items[i].checked;
+           // console.log("checkStatus[i]"+checkStatus[i])
+            let sum=0;
+            //这里存在的问题是checkStatus[i]全部变成1
+            for (let j = 0; j < checkStatus.length; j++) {
+                sum+=checkStatus[j]
+                console.log(sum)
+            }
+           // console.log(sum);
+          //  console.log(typeof sum);
+
+            if (sum==4){
+                checkAllOrNone.checked=true
+            }else {
+               //isAllChecked=false
+                checkAllOrNone.checked=false
+            }
+        }
+    }
+
+    btnAll.onclick = function () {
+        let items = document.getElementsByName("item");
+        for (let i = 0; i < items.length; i++) {
+            items[i].checked = true
+        }
+        checkAllOrNone.checked = true
+    }
+    btnNone.onclick = function () {
+        let items = document.getElementsByName("item");
+        for (let i = 0; i < items.length; i++) {
+            items[i].checked = false
+        }
+        checkAllOrNone.checked = false
+    }
+    btnReverse.onclick = function () {
+        let items = document.getElementsByName("item");
+        for (let i = 0; i < items.length; i++) {
+            items[i].checked = !items[i].checked;
+        }
+
+       // console.log("isAllChecked:"+isAllChecked);
+      //  checkAllOrNone.checked = !isAllChecked;
+    }
+
+    checkAllOrNone.onclick = function () {
+        let items = document.getElementsByName("item");
+        for (let i = 0; i < items.length; i++) {
+            if (checkAllOrNone.checked) {
+                items[i].checked = true
+            } else {
+                items[i].checked = false
+            }
+        }
+    }
+
+</script>
+
+</body>
+</html>

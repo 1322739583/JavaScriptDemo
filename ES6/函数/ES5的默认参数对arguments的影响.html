@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script type="text/javascript">
+       //开启严格模式
+       // "use strict"
+
+       /**
+        * 严格模式能够提升性能，这个模式下的特性是es5所希望改进的。
+        * 为什么要改成这种样子？
+        *
+        * @param first
+        * @param second
+        */
+        function mixArgs(first,second){
+          console.log(first===arguments[0])
+          console.log(second===arguments[1])
+          first="c"
+          second="d"
+          //arguments和形参是分离的，好处是arguments不受影响，想用原来的值（传入的值）还可以用，新值就有修改值后的形参。
+          console.log(first===arguments[0])
+          console.log(second===arguments[1])
+        }
+       // mixArgs("a","b")
+
+       //ES6在非应该模式下，agruments和形参也是分离的
+       //这个例子就是再一次跟你强调agruments和形参是分离的，提供默认值也只是修改形参
+       function mixArgs2(first,second="b"){
+         console.log(arguments[1])//undefined
+         console.log(first===arguments[0])
+         console.log(second===arguments[1])
+         first="c"
+         second="d"
+         //arguments和形参是分离的，好处是arguments不受影响，想用原来的值（传入的值）还可以用，新值就有修改值后的形参。
+         console.log(first===arguments[0])
+         console.log(second===arguments[1])
+       }
+
+       mixArgs2("a")
+
+       /**
+        * 小结：arguments和形参分离是比较好的设计，这样可以使用原来的传入值。
+        * 不然，要使用原来的值你可能需要写这样的代码：var oldArgs=argments
+        */
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

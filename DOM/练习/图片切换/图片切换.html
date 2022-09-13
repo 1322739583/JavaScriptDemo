@@ -10,10 +10,10 @@
             text-align: center;
             padding-bottom: 5px;
         }
-
     </style>
     <script type="text/javascript">
-        window.onload=function (){
+        <!-- 实现逻辑不难，主要就是查找元素，提供数组切换图片 -->
+        window.onload = function () {
             var goods = [
                 "images/goods1.jpg",
                 "images/goods2.jpg",
@@ -23,32 +23,32 @@
             var prev = document.getElementById("prev");
             var next = document.getElementById("next");
             var img = document.getElementById("photo");
-            var tips=document.getElementById("tips")
-            var imgIndex=0;
-            img.src=goods[0]
-            tips.innerHTML="一共"+goods.length+"张，当前第"+(imgIndex+1)+"张"
-            next.onclick=function (){
-                if (imgIndex<goods.length-1){
-                    img.src=goods[++imgIndex]
+            var tips = document.getElementById("tips")
+            var imgIndex = 0;
+            img.src = goods[0]
+            tips.innerHTML = "一共" + goods.length + "张，当前第" + (imgIndex + 1) + "张"
+            next.onclick = function () {
+                if (imgIndex < goods.length - 1) {
+                    img.src = goods[++imgIndex]
                     console.log("if")
-                }else {
-                    imgIndex=0
-                    img.src=goods[imgIndex]
+                } else {
+                    imgIndex = 0
+                    img.src = goods[imgIndex]
                     console.log("else")
                 }
                 console.log(imgIndex)
-                tips.innerHTML="一共"+goods.length+"张，当前第"+(imgIndex+1)+"张"
+                tips.innerHTML = "一共" + goods.length + "张，当前第" + (imgIndex + 1) + "张"
             };
 
-            prev.onclick=function (){
+            prev.onclick = function () {
 
-                if (imgIndex>0){
-                    img.src=goods[--imgIndex]
-                }else {
-                    imgIndex=goods.length-1
-                    img.src=goods[imgIndex]
+                if (imgIndex > 0) {
+                    img.src = goods[--imgIndex]
+                } else {
+                    imgIndex = goods.length - 1
+                    img.src = goods[imgIndex]
                 }
-                tips.innerHTML="一共"+goods.length+"张，当前第"+(imgIndex+1)+"张"
+                tips.innerHTML = "一共" + goods.length + "张，当前第" + (imgIndex + 1) + "张"
             };
         }
     </script>
@@ -62,8 +62,6 @@
     <button id="prev">上一张</button>
     <button id="next">下一张</button>
 </div>
-<script type="text/javascript">
 
-</script>
 </body>
 </html>

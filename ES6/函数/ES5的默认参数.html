@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script type="text/javascript">
+
+    /**
+     * 要讨论的重点问题是在没有传参的情况下es5的缺点
+     * 这里暴露的问题是es5参数没有默认值，因为是var类型，不像java基本数据类型有默认值。
+     * @param url
+     * @param timeout
+     * @param callback
+     */
+    function makeRequest(url, timeout, callback) {
+      //没传参都是undefine，默认值2000都成立。
+      //但有一个例外，我们想传入合法值0，但变成2000
+      timeout = timeout || 2000;
+      callback = callback || function() {};
+    }
+
+    /**
+     * 这个写法是能够实现默认值的功能的，但看起来非常笨重
+     * @param url
+     * @param timeout
+     * @param callback
+     */
+    function makeRequest2(url, timeout, callback) {
+      timeout = (typeof timeout !== "undefined") ? timeout : 2000;
+      callback = (typeof callback !== "undefined") ? callback : function () {
+      };
+      console.log(timeout);
+      console.log(callback);
+      //只有未定义的时候才会输出后面的默认值。不然传什么是什么。
+      console.log(typeof 0 !== "undefined")
+    }
+
+    makeRequest2(0,0,0)
+  </script>
+</head>
+<body>
+
+</body>
+</html>
