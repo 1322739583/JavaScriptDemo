@@ -3,7 +3,8 @@ module.exports = {
     entry:"./src/main.js",
     output:{
         path:path.resolve(__dirname,"dist"),
-        filename:"bundle.js"
+        filename:"bundle.js",
+        publicPath:"dist/"
     },
     module: {
         rules: [
@@ -23,6 +24,38 @@ module.exports = {
                 }, {
                     loader: "less-loader" // compiles Less to CSS
                 }]
+            },
+            // {
+            //     test: /\.(png|jpg|gif)$/,
+            //     use: [
+            //         {
+            //             loader: 'url-loader',
+            //             options: {
+            //                 limit: 8192
+            //             }
+            //         }
+            //     ]
+            // },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name:"img/[name]-[hash:8].[ext]"
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
             }
         ]
 
