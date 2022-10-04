@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!--<link rel="stylesheet" href="./xxx.css">-->
+
+    <style rel="stylesheet">
+
+    </style>
+</head>
+<body>
+<div id="box">
+
+</div>
+<script type="text/javascript">
+    function Foo(){}
+    Foo.prototype.test=function (){
+        console.log("test")
+    }
+    var f=new Foo()
+    console.log(f.test())
+
+    console.log(Foo.prototype)
+    console.log(f.__proto__)
+    console.log(Foo.prototype===f.__proto__)
+
+    console.log(f)
+    console.log("..........")
+    console.log(Foo.__proto__.constructor.prototype===Foo.__proto__.constructor.prototype.constructor.prototype.constructor.prototype)
+
+
+</script>
+
+</body>
+</html>
