@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!--<link rel="stylesheet" href="./xxx.css">-->
+
+    <style rel="stylesheet">
+        #canvas {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="500" height="500"></canvas>
+<div id="content">
+
+</div>
+<script type="text/javascript">
+    let canvas = document.getElementById("canvas")
+    var context = canvas.getContext("2d");
+    ball = new Ball()
+    ball.x = 100;
+    ball.y = 100;
+    ball.color = "#ffcb6b";
+    vx = 1;
+
+    (function drawFrame() {
+        //添加这句才会有动画
+        window.requestAnimationFrame(drawFrame, canvas)
+        //刷新画布，不然会有拖影
+        context.clearRect(0, 0, canvas.width, canvas.height)
+        ball.x += vx
+        ball.draw(context)
+    }())
+
+</script>
+
+</body>
+</html>

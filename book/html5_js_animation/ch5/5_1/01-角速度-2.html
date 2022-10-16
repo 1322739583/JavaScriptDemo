@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../include/style.css">
+    <script src="../../include/utils.js"></script>
+    <script src="./ball.js"></script>
+    <script>
+        window.onload = function () {
+            console.log("onload")
+            let canvas = document.getElementById("canvas")
+            let context = canvas.getContext("2d");
+            let ball=new Ball()
+            //移动速度
+            let vx=1
+            let vy=1
+            //小球的起始圆心位置
+            ball.x=50
+            ball.y=100;
+            ball.color="#ffcb6b";
+            (function drawFrame(){
+                //添加这句才会有动画
+                 window.requestAnimationFrame(drawFrame,canvas)
+                //刷新画布，不然会有拖影
+                context.clearRect(0,0,canvas.width,canvas.height)
+                ball.x+=vx
+                ball.y+=vy
+                ball.draw(context)
+            }())
+        }
+    </script>
+</head>
+<body>
+<canvas id="canvas" width="400" height="400"></canvas>
+
+<div id="content">
+
+</div>
+
+</body>
+</html>

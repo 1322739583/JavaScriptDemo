@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        window.onload=function (){
+
+                //html元素
+               // var htmlEl = document.documentElement;
+                //body元素
+                var bodyEl = document.body;
+
+                //head元素
+               // var headEl = document.head;
+
+                //doctype元素
+              //  var doctypeEl = document.doctype;
+
+                // console.log(htmlEl)
+              //  console.log(bodyEl)
+                // console.log(headEl)
+                // console.log(doctypeEl)
+
+                //六个获取节点的方法
+                // console.log(".....1.childNodes......")
+                // console.log(bodyEl.childNodes);
+                // console.log(".....2.firstChild......")
+                // console.log(bodyEl.firstChild);
+                // console.log(".....3.lastChild......")
+                // console.log(bodyEl.lastChild);
+                // console.log(".....4.parentNode......")
+                // console.log(bodyEl.parentNode);
+                // console.log(".....5.previousSibling......")
+                // console.log(bodyEl.previousSibling.previousSibling);
+                console.log(".....6.nextSibling......")
+                console.log(bodyEl.nextSibling);
+
+                // console.log(document.getElementById("list").childNodes);
+                // console.log("............")
+                // console.log(document.getElementById("list").lastChild);
+                console.log(document.getElementById("list").nextSibling);
+
+    }
+    </script>
+</head>
+<body>
+<!--测试document对象-->
+<ul id="list">
+    <li>item1</li>
+    <li>item2</li>
+    <li>item3</li>
+</ul>
+
+
+</body>
+123
+<div>456</div>
+
+</html>

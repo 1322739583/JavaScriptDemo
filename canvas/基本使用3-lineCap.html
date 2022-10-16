@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!--<link rel="stylesheet" href="./xxx.css">-->
+
+    <style rel="stylesheet">
+        body {
+            background-color: #eee;
+        }
+
+        canvas {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+<!--   1.创建canvas-->
+<canvas id="canvas" height="500" width="500">您的浏览器不支持canvas,请更换浏览器</canvas>
+<script type="text/javascript">
+    let canvas = document.getElementById("canvas")
+    if (canvas.getContext){
+        //2.获取上下文
+        let context=canvas.getContext("2d")
+        context.fillStyle="#ffcb6b"
+        context.strokeStyle="#f78c6c"
+        context.fillRect(100,100,200,200)
+        context.strokeRect(100,100,200,200)
+
+        context.fillStyle="#2ed573"
+        context.strokeStyle="rgba(0,0,255,0.5)"
+        context.lineWidth=50
+        context.lineJoin="miter"
+        context.fillRect(200,200,200,200)
+        context.strokeRect(200,200,200,200)
+
+
+        // 取得图像的数据 URI
+        let imgURI = canvas.toDataURL("image/png");
+        // 显示图片
+        let image = document.createElement("img");
+        image.src = imgURI;
+        document.body.appendChild(image);
+    }
+</script>
+
+</body>
+</html>
