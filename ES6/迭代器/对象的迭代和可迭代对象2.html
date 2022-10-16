@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script type='text/javascript'>
+        let profile={
+            friends:["Tom","Jack","Mike"],
+            name:"xiaoming",
+            gender:"male",
+            [Symbol.iterator]:function(){
+                let index=0
+                const profileIteraror={
+                    next:function (){
+                        if (index<profile.friends.length){
+                            const result={value:profile.friends[index],done:false}
+                            index++
+                            return result
+                        }
+                        return {done: true}
+                    }
+                }
+                return profileIteraror
+            }
+        }
+
+        for (p of profile) {
+            console.log(p)
+        }
+
+    </script>
+</body>
+</html>

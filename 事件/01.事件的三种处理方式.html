@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 方式一：直接在元素中定义（了解） -->
+    <!-- 不推荐，不能写复杂的代码 -->
+    <button id="btn" onclick="console.log('clicked')">按钮1</button>
+    <!-- 方式二：在script中指定对应的函数(推荐) 
+    这种方式是非常常见的。
+    不过有个小问题就是不能有多个监听函数，后面的监听函数会覆盖前面的监听函数。 -->
+    <script type='text/javascript'>
+        var btn = document.querySelector("#btn")
+        function click1() {
+            console.log("click1");
+        }
+        function click2() {
+            console.log("click2");
+        }
+        btn.onclick = click1
+        btn.onclick = click2
+    </script>
+    <!-- 方式三：通过addEventListener函数添加监听(推荐)-->
+    <!-- 可以同时监听多个函数，并且可以监听不同的事件 -->
+    <script type='text/javascript'>
+        var btn = document.querySelector("#btn")
+        function click1() {
+            console.log("第一个click");
+        }
+        function click2() {
+            console.log("第二个click");
+        }
+        document.addEventListener("click",click1)
+        document.addEventListener("click",click2)
+    </script>
+    <!-- 总结：
+    方式二和方式三都是可以使用的。
+    方式二在处理只有一个监听函数的时候是完全没问题是，也非常好用。
+    方式三非常的通用，并且可以处理多个函数的情况。    
+    -->
+</body>
+
+</html>

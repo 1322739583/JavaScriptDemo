@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <script type="text/javascript">
-       function fun(){
-         console.log(arguments)
-         console.log(arguments instanceof Array)
-         console.log(arguments.length)
-         console.log(arguments[0])
-         console.log(arguments[1])
-         console.log(arguments[2]) 
-       }
-       fun("Hello",true,1)
-  </script>
+    <script type="text/javascript">
+        var name="jack"
+        function fun() {
+
+            console.log(arguments)
+            //object 是一个对象
+            console.log(typeof arguments)
+            console.log(arguments.length)
+            //可以下标访问，但不是数组，而是类数组。
+            // 类数组的特点就是用迭代器故意设计生数组的用法，但是数组的添加删除方法是不能用的。
+            //类数组的目的就是让你用数组的方式访问，但不希望你修改内容。
+            console.log(arguments[0])
+            console.log(arguments[1])
+            console.log(arguments[2])
+        }
+
+        fun("Hello", true, 1)
+    </script>
     <script type="text/javascript"></script>
 </head>
 <body>

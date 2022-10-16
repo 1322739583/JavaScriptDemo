@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 200px;
+            height: 200px;
+            background-color: lightblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        div
+        <button id="btn">按钮</button>
+    </div>
+    <script type='text/javascript'>
+        var btn = document.querySelector("#btn")
+        var box = document.querySelector("#box")
+        var body = document.body
+        var html = document.documentElement
+
+        btn.addEventListener('click', function () {
+            console.log("btn");
+        })
+
+
+        box.addEventListener('click', function () {
+            console.log("box");
+        })
+
+        body.addEventListener('click', function () {
+            console.log("body");
+        })
+
+        html.addEventListener('click', function () {
+            console.log("html");
+        })
+
+        
+        btn.addEventListener('click', function () {
+            console.log("btn");
+        }, true)
+
+
+        box.addEventListener('click', function () {
+            console.log("box");
+        }, true)
+
+        body.addEventListener('click', function () {
+            console.log("body");
+        }, true)
+
+        html.addEventListener('click', function () {
+            console.log("html");
+        }, true)
+    </script>
+</body>
+
+</html>

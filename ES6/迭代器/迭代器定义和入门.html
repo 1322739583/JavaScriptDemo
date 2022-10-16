@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type='text/javascript'>
+        //1.协议需要实现的样子
+        // {
+        //     function next() {
+
+        //     }
+        //     return{value:null,done:true}
+        // }
+        //2.具体实现
+        function makeRangeIterator(start = 0, end = Infinity, step = 1) {
+            let nextIndex = start
+            let iterateCount=0
+
+            const iterator = { 
+                  next:function(){
+                    let result
+                    if(nextIndex<end){
+                        result={value:nextIndex,done:false}
+                        nextIndex+=step
+                        iterateCount++
+                        return result
+                    }
+                    return {value:iterateCount,done:true}    
+                  }
+            }
+            return iterator
+        }   
+
+    
+
+       let it= makeRangeIterator(1,6,2)
+    //    console.log(it.next());
+    //    console.log(it.next());
+    //    console.log(it.next());
+    //    console.log(it.next());
+       
+       let result=it.next()
+       while (!result.done) {
+            console.log(result);
+            result=it.next()
+       }
+    </script>
+</body>
+
+</html>

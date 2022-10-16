@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type='text/javascript'>
+        
+        function createArrayIterator(arr) {
+            if (!(arr instanceof  Array)) {
+                console.error("请传入数值");
+                return
+            }
+            let index = 0
+            const iterator = {
+                next: function () {
+                    if (index < arr.length) {
+                        let result = { value: arr[index], done: false }
+                        index++
+                        return result
+                    }
+                    return {value:"数值长度为："+arr.length,done:true}
+                }
+            }
+            return iterator
+        }
+
+        const nums = [12, 5, 66, 77, 18]
+        let it=createArrayIterator(nums)
+        let result=it.next()
+        while (!result.done) {
+            console.log(result.value);
+            result=it.next()
+        }
+
+    </script>
+</body>
+
+</html>
