@@ -24,7 +24,8 @@ Ball.prototype.draw=function (context){
     context.fillStyle=this.color
     context.beginPath()
     //radius默认是40.
-    context.arc(0,0,this.radius,0,Math.PI*2,true)
+    // context.arc(0,0,this.radius,0,Math.PI*2,true)
+    context.rect(0,0,100,100)
     context.closePath()
     context.fill()
     if (this.lineWidth>0){

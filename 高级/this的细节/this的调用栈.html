@@ -7,9 +7,9 @@
     <!--<link rel="stylesheet" href="./xxx.css">-->
 
     <style rel="stylesheet">
-             #content{
-                 
-             }
+        #content {
+
+        }
     </style>
 </head>
 <body>
@@ -17,7 +17,28 @@
 
 </div>
 <script type="text/javascript">
-   
+    function bar(){
+        console.log("bar")
+        foo()
+    }
+
+    function baz(){
+        console.log("baz")
+        bar()
+    }
+
+
+    function foo(){
+          console.log("foo")
+    }
+
+    baz()
+
+
+
+
+
+      console.log()
 </script>
 
 </body>

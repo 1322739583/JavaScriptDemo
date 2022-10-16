@@ -7,17 +7,24 @@
     <!--<link rel="stylesheet" href="./xxx.css">-->
 
     <style rel="stylesheet">
-             #content{
-                 
-             }
+        #content {
+
+        }
     </style>
 </head>
 <body>
 <div id="content">
-
+    <ul id="list">
+        <li>item1</li>
+        <li>item2</li>
+        <li>item3</li>
+    </ul>
 </div>
 <script type="text/javascript">
-   
+         var content = document.getElementById("list");
+         // console.log(content.childNodes);
+         console.log(content.children);
+         
 </script>
 
 </body>

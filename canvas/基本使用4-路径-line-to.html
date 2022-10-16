@@ -22,28 +22,15 @@
 <script type="text/javascript">
     let canvas = document.getElementById("canvas")
     if (canvas.getContext){
+
         //2.获取上下文
         let context=canvas.getContext("2d")
-        context.fillStyle="#ffcb6b"
-        context.strokeStyle="#f78c6c"
-        context.fillRect(100,100,200,200)
-        context.strokeRect(100,100,200,200)
-
-        context.fillStyle="#2ed573"
-        context.strokeStyle="rgba(0,0,255,1)"
-        context.lineWidth=50
-        context.lineJoin="miter"
-        context.lineCap="round"
-        context.fillRect(200,200,200,200)
-        context.strokeRect(200,200,200,200)
-
-
-        // 取得图像的数据 URI
-        let imgURI = canvas.toDataURL("image/png");
-        // 显示图片
-        let image = document.createElement("img");
-        image.src = imgURI;
-        document.body.appendChild(image);
+        context.beginPath()
+        context.moveTo(0,0)
+        context.lineTo(100,100)
+        context.lineTo(200,100)
+        context.lineTo(300,250)
+        context.stroke()
     }
 </script>
 

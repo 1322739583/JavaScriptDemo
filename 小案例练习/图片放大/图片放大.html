@@ -7,17 +7,59 @@
     <!--<link rel="stylesheet" href="./xxx.css">-->
 
     <style rel="stylesheet">
-             #content{
-                 
-             }
+        #content {
+            height: 100px;
+            width: 100px;
+            background-color: lightseagreen;
+        }
+        img{
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
 <div id="content">
-
+     <img src="./child_cow.jpg" alt="">
 </div>
 <script type="text/javascript">
-   
+      var img = document.querySelector("img");
+      img.onmouseover=function (){
+
+          img.style.height="200px";
+          img.style.width="200px";
+          console.log(img.style.marginTop)
+          console.log(img.style.marginLeft)
+          console.log(img.style.marginBottom)
+          console.log(img.style.marginRight)
+          console.log(img.style.margin)
+          console.log(img.style.left)
+          console.log(img.style.right)
+          console.log(img.style.top)
+          console.log(img.style.bottom)
+          console.log(img.style.position)
+          console.log(img.style.backgroundPosition)
+
+          img.style.off
+
+
+      }
+      img.onmouseout=function (){
+
+          img.style.height="100px";
+          img.style.width="100px";
+
+          img.style.marginTop="100px"
+          img.style.marginLeft="100px"
+
+      }
 </script>
 
 </body>

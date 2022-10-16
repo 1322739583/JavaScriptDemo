@@ -24,7 +24,12 @@
     if (canvas.getContext){
         //2.获取上下文
         let context=canvas.getContext("2d")
+        context.fillStyle="#ffcb6b"
+        context.strokeStyle="#f78c6c"
         context.fillRect(100,100,200,200)
+        context.strokeRect(100,100,200,200)
+
+
 
         // 取得图像的数据 URI
         let imgURI = canvas.toDataURL("image/png");

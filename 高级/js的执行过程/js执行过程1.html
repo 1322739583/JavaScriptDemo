@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type='text/javascript'>
+        var message = "Global Message"
+        function foo(num) {
+            var message = "Foo Message"
+            var num=num
+            bar()
+            var name="Tom"
+            var age=18
+            console.log(message);
+        }
+
+        function bar() {
+            console.log("Bar function");
+            var name="Jack"
+        }
+
+        foo(123)
+        foo(456)
+        foo(789)
+        var num1 = 10
+        var num2 = 20
+        var result = num1 + num2
+        console.log(result);
+    </script>
+
+</body>
+
+</html>

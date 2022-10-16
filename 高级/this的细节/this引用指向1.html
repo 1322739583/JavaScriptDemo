@@ -7,9 +7,9 @@
     <!--<link rel="stylesheet" href="./xxx.css">-->
 
     <style rel="stylesheet">
-             #content{
-                 
-             }
+        #content {
+
+        }
     </style>
 </head>
 <body>
@@ -17,7 +17,20 @@
 
 </div>
 <script type="text/javascript">
-   
+     let a=0
+     a=0
+
+    let  color = 'red';
+
+    let o = {
+        color: 'blue'
+    };
+    function sayColor() {
+        console.log(this.color);
+    }
+    sayColor(); // 'red'
+    o.sayColor = sayColor;
+    o.sayColor(); // 'blue'
 </script>
 
 </body>

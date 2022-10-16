@@ -7,9 +7,9 @@
     <!--<link rel="stylesheet" href="./xxx.css">-->
 
     <style rel="stylesheet">
-             #content{
-                 
-             }
+        #content {
+
+        }
     </style>
 </head>
 <body>
@@ -17,7 +17,20 @@
 
 </div>
 <script type="text/javascript">
-   
+          // function foo(){
+          //     console.log("foo:",this)
+          // }
+          // foo()
+
+          var obj={
+              name:"Tom",
+              sayName:function (){
+                  console.log("sayName:",this)
+              }
+          }
+          obj.sayName()
+          var bar=obj.sayName
+          bar()
 </script>
 
 </body>

@@ -3,21 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!--    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>-->
     <!--<link rel="stylesheet" href="./xxx.css">-->
 
+
     <style rel="stylesheet">
-             #content{
-                 
-             }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            position: fixed;
+            background-color: lightseagreen;
+        }
     </style>
 </head>
 <body>
-<div id="content">
-
-</div>
+<button id="btn">动画</button>
+<div id="box"></div>
 <script type="text/javascript">
-   
+    var btn = document.getElementById('btn');
+    var box = document.getElementById('box');
+    var bodyWidth = document.body.clientWidth
+    let timer = null;
+    console.log(bodyWidth)
+
+    var num = 0;
+    btn.onclick = function () {
+        clearInterval(timer)
+        timer = setInterval(function () {
+            if (num >= 1000) {
+                box.style.right = bodyWidth + "px"
+                clearInterval(timer)
+            }
+            {
+                num += 20;
+                console.log(box.style.left)
+                box.style.left = num + 'px';
+            }
+        }, 30);
+    }
 </script>
 
 </body>

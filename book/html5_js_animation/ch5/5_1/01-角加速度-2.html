@@ -12,8 +12,10 @@
             let canvas = document.getElementById("canvas")
             let context = canvas.getContext("2d");
             let ball = new Ball()
-            let angle=45
+            let speedAngle=90
+            let fouceAngle=0
             let speed=1
+            let fouce=0.5
             //移动速度
             let vx = 0
             let vy = 0
@@ -26,9 +28,14 @@
                 window.requestAnimationFrame(drawFrame, canvas)
                 //刷新画布，不然会有拖影
                 context.clearRect(0, 0, canvas.width, canvas.height)
-                let radius=angle*Math.PI/180
-                vx=Math.cos(radius)*speed
-                vy=Math.sin(radius)*speed
+                let fouceRadius=fouceAngle*Math.PI/180
+                ax=Math.cos(fouceRadius)*fouce
+                ay=Math.sin(fouceRadius)*fouce
+                let speedRadius=speedAngle*Math.PI/180
+                vx=Math.cos(speedRadius)*speed+ax
+                vy=Math.sin(speedRadius)*speed+ay
+
+
                 ball.x += vx
                 ball.y += vy
                 setInterval(()=>{

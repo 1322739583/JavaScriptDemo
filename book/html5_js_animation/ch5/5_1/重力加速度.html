@@ -14,20 +14,20 @@
             let context = canvas.getContext("2d");
             let ball = new Ball()
             //移动速度
-            let vx = 0
+            let vy = 0
             //0.1
-            let ax = 0.1
+            let ay = 0.001
             //小球的起始圆心位置
-            ball.x = 50
-            ball.y = 100;
+            ball.x = canvas.offsetWidth/2
+            ball.y = 50;
             ball.color = "#ffcb6b";
             (function drawFrame() {
                 //添加这句才会有动画
                 window.requestAnimationFrame(drawFrame, canvas)
                 //刷新画布，不然会有拖影
                 context.clearRect(0, 0, canvas.width, canvas.height)
-                vx += ax
-                ball.x += vx
+                vy += ay
+                ball.y += vy
                 ball.draw(context)
             }())
 

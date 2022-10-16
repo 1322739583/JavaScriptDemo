@@ -11,28 +11,36 @@
             console.log("onload")
             let canvas = document.getElementById("canvas")
             let context = canvas.getContext("2d");
-            let ball=new Ball()
+            let ball = new Ball()
+            let angle=45
+            let speed=1
             //移动速度
-            let vx=1
-            let vy=1
+            let vx = 0
+            let vy = 0
             //小球的起始圆心位置
-            ball.x=50
-            ball.y=100;
-            ball.color="#ffcb6b";
-            (function drawFrame(){
+            ball.x = 50
+            ball.y = 100;
+            ball.color = "#ffcb6b";
+            (function drawFrame() {
                 //添加这句才会有动画
-                 window.requestAnimationFrame(drawFrame,canvas)
+                window.requestAnimationFrame(drawFrame, canvas)
                 //刷新画布，不然会有拖影
-                context.clearRect(0,0,canvas.width,canvas.height)
-                ball.x+=vx
-                ball.y+=vy
+                context.clearRect(0, 0, canvas.width, canvas.height)
+                let radius=angle*Math.PI/180
+                vx=Math.cos(radius)*speed
+                vy=Math.sin(radius)*speed
+                ball.x += vx
+                ball.y += vy
+                setInterval(()=>{
+                    angle=-angle
+                },1500)
                 ball.draw(context)
             }())
         }
     </script>
 </head>
 <body>
-<canvas id="canvas" width="400" height="400"></canvas>
+<canvas id="canvas" width="1000" height="1000"></canvas>
 
 <div id="content">
 

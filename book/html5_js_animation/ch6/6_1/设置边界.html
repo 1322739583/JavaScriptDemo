@@ -4,36 +4,76 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <!--<link rel="stylesheet" href="./xxx.css">-->
+    <link rel="stylesheet" href="../../include/style.css">
+    <script src="../../include/utils.js"></script>
+    <script src="./ball.js"></script>
 
     <style rel="stylesheet">
         #canvas {
-            background-color: #eee;
+            background-color: white;
         }
     </style>
 </head>
 <body>
-<canvas id="canvas" width="500" height="500"></canvas>
+<canvas id="canvas" width="1900" height="700"></canvas>
 <div id="content">
 
 </div>
 <script type="text/javascript">
     let canvas = document.getElementById("canvas")
     var context = canvas.getContext("2d");
-    ball = new Ball()
-    ball.x = 100;
-    ball.y = 100;
-    ball.color = "#ffcb6b";
-    vx = 1;
+    for (let i = 0; i < 3; i++) {
+        setTimeout(()=>{
+           let ball = new Ball()
+            ball.x = 100;
+            ball.y = 100;
 
-    (function drawFrame() {
-        //添加这句才会有动画
-        window.requestAnimationFrame(drawFrame, canvas)
-        //刷新画布，不然会有拖影
-        context.clearRect(0, 0, canvas.width, canvas.height)
-        ball.x += vx
-        ball.draw(context)
-    }())
+            ball.rotation=0
+            ball.color = "#ffcb6b";
+            let vx = 5;
+            let vy = 5;
+
+            (function drawFrame() {
+                //添加这句才会有动画
+                window.requestAnimationFrame(drawFrame, canvas)
+                //刷新画布，不然会有拖影
+                context.clearRect(0, 0, canvas.width, canvas.height)
+                ball.x += vx
+                ball.y += vy
+                speed=10
+                ball.rotation+=0.1
+                if (ball.x>=canvas.width){
+                    ball.x=canvas.width
+                    vy=speed
+                    ball.radius=900
+
+                    ball.color="#2ed573"
+                }else if(ball.x<0){
+                    ball.x=0
+                    vy=-speed
+                    ball.radius=400
+                    ball.color="#ffcb6b"
+                }
+
+                if (ball.y<=0){
+                    ball.y=0
+                    ball.radius=700
+                    vx=speed
+                    ball.color="#f78c6c"
+                }else if(ball.y>canvas.height){
+                    ball.y=canvas.height
+                    vx=-speed
+                    ball.radius=10
+                    ball.color="#0984e3"
+                }
+
+
+                ball.draw(context)
+            }())
+        },2000*i)
+
+    }
+
 
 </script>
 
