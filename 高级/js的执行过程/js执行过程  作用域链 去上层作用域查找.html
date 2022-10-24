@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!--    <link rel="stylesheet" href="/common/css/reset.css">-->
+
+    <style rel="stylesheet">
+        #content {
+
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+
+</div>
+<script type="text/javascript">
+
+    var message = "Global Message"
+
+    function foo() {
+        console.log(message)
+        var message="Foo Message"
+        function bar() {
+            console.log("name:"+name)
+            var name="Jack"
+            console.log(message)
+        }
+        return bar
+    }
+
+    console.log("bar:"+bar)
+    var bar = foo()
+    bar()
+
+</script>
+
+</body>
+</html>
