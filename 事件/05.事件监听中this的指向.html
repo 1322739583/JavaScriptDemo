@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
+    <!-- <link rel="stylesheet" href="/common/css/reset.css"> -->
+
+    <style rel="stylesheet">
+        div {
+            width: 500px;
+            height: 500px;
+            background-color: lightgreen;
+        }
+
+        span {
+            display: block;
+            width: 200px;
+            height: 200px;
+            background-color: gold;
+        }
+    </style>
+</head>
+<body>
+<a href="http://www.baidu.com">百度一下</a>
+<div class="box">
+    <span>
+        <button>按钮</button>
+    </span>
+</div>
+<script type="text/javascript">
+    var a = document.querySelector("a");
+    a.onclick=function (event){
+        event.preventDefault()
+    }
+
+
+    var divEl = document.querySelector(".box");
+    var spanEl = document.querySelector("span");
+    var btnEl = document.querySelector("button");
+
+    divEl.addEventListener("click",function (event){
+        console.log("div的事件捕获监听");
+        event.stopPropagation()
+    },true)
+
+    spanEl.addEventListener("click",function (){
+        console.log("span的事件捕获监听");
+    },true)
+
+    btnEl.addEventListener("click",function (){
+        console.log("button的事件捕获监听");
+    },true)
+
+    divEl.addEventListener("click",function (){
+        console.log("div的事件冒泡监听");
+    })
+
+    spanEl.addEventListener("click",function (){
+        console.log("span的事件冒泡监听");
+    })
+
+    btnEl.addEventListener("click",function (){
+        console.log("button的事件冒泡监听");
+    })
+
+
+
+
+</script>
+
+</body>
+</html>
