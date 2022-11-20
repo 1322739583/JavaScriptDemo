@@ -7,17 +7,41 @@
     <link rel="stylesheet" href="/common/css/reset.css">
 
     <style rel="stylesheet">
-             #content{
-                 
-             }
+        .box{
+            width: 200px;
+            height: 200px;
+            background-color: gold;
+        }
     </style>
 </head>
 <body>
-<div id="content">
+<div class="box">
 
 </div>
 <script type="text/javascript">
-   
+      var divEl = document.querySelector(".box");
+      // divEl.oncontextmenu=function (event){
+      //     console.log("按了鼠标右键")
+      //     event.preventDefault()
+      // }
+      divEl.ondblclick=function (){
+          console.log("双击了")
+      }
+
+      var isDown=false
+      divEl.onmousedown=function (){
+          console.log("鼠标按下了")
+          isDown=true
+      }
+      divEl.onmouseup=function (){
+          console.log("鼠标松开了")
+          isDown=false
+      }
+      divEl.onmousemove=function (){
+          if (isDown){
+              console.log("鼠标移动了")
+          }
+      }
 </script>
 
 </body>

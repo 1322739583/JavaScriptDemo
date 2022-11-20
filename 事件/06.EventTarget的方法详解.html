@@ -4,20 +4,28 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <link rel="stylesheet" href="/common/css/reset.css">
+    <!-- <link rel="stylesheet" href="/common/css/reset.css"> -->
 
     <style rel="stylesheet">
-             #content{
-                 
-             }
+        #content {
+
+        }
     </style>
 </head>
 <body>
+<button>按钮</button>
 <div id="content">
 
 </div>
 <script type="text/javascript">
-   
+    btnEl=document.querySelector("button")
+    btnEl.addEventListener("click",foo)
+    function foo(){
+        console.log("事件调用监听")
+    }
+    setTimeout(function (){
+        btnEl.removeEventListener("click",foo)
+    },5000)
 </script>
 
 </body>

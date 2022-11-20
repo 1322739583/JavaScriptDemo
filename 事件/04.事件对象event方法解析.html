@@ -7,7 +7,7 @@
     <!-- <link rel="stylesheet" href="/common/css/reset.css"> -->
 
     <style rel="stylesheet">
-        #content {
+        div {
             width: 500px;
             height: 500px;
             background-color: lightgreen;
@@ -22,36 +22,49 @@
     </style>
 </head>
 <body>
-<div id="content">
-    <span></span>
+<a href="http://www.baidu.com">百度一下</a>
+<div class="box">
+    <span>
+        <button>按钮</button>
+    </span>
 </div>
 <script type="text/javascript">
-    var boxContent = document.querySelector("#content");
-    var s1 = document.querySelector("span");
-
-    boxContent.onclick = function (event) {
-        //事件类型
-        console.log("type:"+event.type);//click
-        //事件阶段
-        console.log("eventPhase:"+event.eventPhase);
-        //相对于视口原点(左上角)
-        console.log("clientX:"+event.clientX+" clientY:"+event.clientY);
-        //相对于页面，当发生向下滚动的时候，相对于滚动前的原点((左上角))
-        console.log("pageX:"+event.pageX+" pageY:"+event.pageY);
-        //相对于屏幕，而不是浏览器
-        console.log("screenX:"+event.screenX+" screenX:"+event.screenY);
-        //事件发生的地方
-        console.log(event.target);
-        //事件正在处理的地方
-        console.log(event.currentTarget);
-        //
-        console.log(event.target===event.currentTarget)
+    var a = document.querySelector("a");
+    a.onclick=function (event){
+        event.preventDefault()
     }
 
-    // boxContent.addEventListener("click",function (event){
-    //
-    //     console.log("eventPhase:"+event.eventPhase);
-    // })
+
+    var divEl = document.querySelector(".box");
+    var spanEl = document.querySelector("span");
+    var btnEl = document.querySelector("button");
+
+    divEl.addEventListener("click",function (event){
+        console.log("div的事件捕获监听");
+        event.stopPropagation()
+    },true)
+
+    spanEl.addEventListener("click",function (){
+        console.log("span的事件捕获监听");
+    },true)
+
+    btnEl.addEventListener("click",function (){
+        console.log("button的事件捕获监听");
+    },true)
+
+    divEl.addEventListener("click",function (){
+        console.log("div的事件冒泡监听");
+    })
+
+    spanEl.addEventListener("click",function (){
+        console.log("span的事件冒泡监听");
+    })
+
+    btnEl.addEventListener("click",function (){
+        console.log("button的事件冒泡监听");
+    })
+
+
 
 
 </script>
