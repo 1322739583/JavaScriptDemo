@@ -8,12 +8,8 @@
 </head>
 <body>
     <script>
-        var arr=[1,2,3]
-        arr.forEach(function (item){
-            console.log(item,this);
-        })
-
-       
-    </script>    
+         var codeString=`var name="Tom"; console.log(name);`
+         eval(codeString)
+    </script>
 </body>
 </html>

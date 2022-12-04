@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type='text/javascript'>
+        var obj={
+            name:"Tom",
+            age:19,
+            bar:function(){}
+            
+        }
+        console.log(obj);
+        console.log(obj.__proto__);
+        console.log(Object.getPrototypeOf(obj)); 
+        Object.getPrototypeOf(obj).message="This is a message"
+        console.log(message);
+
+        function foo(){
+
+        }
+
+
+        console.log(foo.__proto__);
+        console.log(foo.prototype);
+        console.log(obj.prototype);
+
+
+    </script>
+</body>
+</html>
