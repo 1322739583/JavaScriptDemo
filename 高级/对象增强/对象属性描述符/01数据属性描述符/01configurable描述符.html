@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        var obj = {
+            name: "Tom",
+            age: 18
+        }
+
+        //1.通过Object.defineProperty定义属性描述符
+        //第一个参数表示要操作的对象，第二个参数表示要操作的属性，第三个参数表示要对属性进行的修饰。
+        Object.defineProperty(obj, "name", {
+            //表示可被修改
+            configurable:false,
+            enumerable:true,
+            writable:false
+            // value:"abc"
+        })
+
+        obj.name="Jack1"
+
+        Object.defineProperty(obj, "name", {
+            value:"Jack2"
+        })
+
+        console.log("keys:"+Object.keys(obj));
+
+        // Object.defineProperty(obj, "name", {
+        //     configurable:true
+        // })
+
+        obj.name="cde"
+
+        // delete obj.name
+
+        console.log(obj);
+
+        Object.defineProperty(obj, "address", {})
+        console.log(obj);
+
+        //2.测试enumerable
+        var obj2 = {
+            name: "Tom",
+            age: 18
+        }
+
+        Object.defineProperty(obj2, "name", {
+            enumerable:false
+        })
+        console.log(obj2);
+
+
+    </script>
+</body>
+
+</html>
