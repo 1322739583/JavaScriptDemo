@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>-->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!--<link rel="stylesheet" href="/common/css/reset.css">-->
+
+    <style rel="stylesheet">
+        #content {
+
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+
+</div>
+<script type="text/javascript">
+      //方式一：
+      const nums=[1,2,3]
+      console.log(nums)
+      //方式二：new Array(不推荐)
+      //这样写是支持的，只是会有警告，而且没什么必要，非常的麻烦。
+      //并且非常容易出错
+      const names=new Array("Tom","Jack")
+      console.log(names)
+      //这个写法会创建5个空内容。而不是第一个值是5，实际上就是指定数值长度
+      //所以，不要用new Array的方式。
+      const arr=new Array(5)
+      console.log(arr)
+</script>
+
+</body>
+</html>

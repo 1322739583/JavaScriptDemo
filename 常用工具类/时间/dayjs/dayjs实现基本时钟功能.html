@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <style rel="stylesheet">
+        #content {
+
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+{{date.format("YYYY-MM-DD HH:mm:ss")}}
+</div>
+<script type="text/javascript">
+    const app = new Vue({
+        el: "#content",
+        data: {
+            date:dayjs()
+        },
+        methods: {
+            nextSecond(){
+                this.date=this.date.add(1,'second')
+            }
+        },
+        computed:{
+
+        },
+
+        mounted(){
+            console.log("onMouted");
+            setInterval(()=>{
+                this.nextSecond()
+            },1000)
+        }
+    })
+</script>
+
+</body>
+</html>

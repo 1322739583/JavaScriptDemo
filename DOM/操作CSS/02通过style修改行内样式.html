@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>-->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!--<link rel="stylesheet" href="/common/css/reset.css">-->
+
+    <style rel="stylesheet">
+        #content {
+
+        }
+        .hidden{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    <div class="list hidden">
+        <div class="item">item1</div>
+        <div class="item">item2</div>
+        <div class="item">item3</div>
+        <div class="item">item4</div>
+        <div class="item">item5</div>
+    </div>
+</div>
+<button class="btnShow">显示/隐藏菜单</button>
+<script type="text/javascript">
+   let btnShow=document.querySelector(".btnShow")
+   let list=document.querySelector(".list")
+   let isHidden=true
+
+   btnShow.addEventListener("click",()=>{
+       if (isHidden){
+           showElement(list,10,50)
+       }else {
+           hiddenElement(list)
+       }
+
+   })
+
+   function showElement(element,x,y){
+       element.style.position="absolute"
+       element.style.left=`${x}px`
+       element.style.top=`${y}px`
+       element.classList.remove("hidden")
+       isHidden=false
+   }
+
+   function hiddenElement(element){
+       element.classList.add("hidden")
+       isHidden=true
+   }
+</script>
+
+</body>
+</html>

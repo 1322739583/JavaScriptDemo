@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>-->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!--<link rel="stylesheet" href="/common/css/reset.css">-->
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <style rel="stylesheet">
+        #content {
+
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+
+</div>
+<script type="text/javascript">
+    let now=dayjs()
+    console.log(now.year()+"-"+(now.month()+1)+"-"+now.day())
+    console.log(now.format())
+    console.log(now.toString())
+    //2022-10-21
+    console.log(now.format("YYYY-MM-DD"))
+    //12小时制 2022-10-21 01:33:23 PM
+    //A 自动识别上下午
+    console.log(now.format("YYYY-MM-DD hh:mm:ss A"))
+    //24小时制 2022-10-21 01:33:23.966
+    console.log(now.format("YYYY-MM-DD HH:mm:ss.SSS"))
+
+    console.log(dayjs('2019-01-25').toString());
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style rel="stylesheet">
+        #content {
+
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    date:{{curDate}}<br>
+    <button @click="preHours()">上一小时</button>
+    <button @click="nextHours">下一小时</button>
+    <button @click="preDate">上一天</button>
+    <button @click="nextDate">下一天</button>
+    <button @click="preWeek">上一周</button>
+    <button @click="nextWeek">下一周</button>
+    <button @click="preMonth">上一月</button>
+    <button @click="nextMonth">下一月</button>
+</div>
+<script type="text/javascript">
+    const app = new Vue({
+        el: "#content",
+        data: {
+            message: "hello",
+            curDate:new Date()
+        },
+        methods: {
+            preHours( ){
+                console.log("....")
+
+                // var fullYear = this.curDate.getFullYear();
+                // var month = this.curDate.getMonth();
+                // var date = this.curDate.getDate();
+                // var hours = this.curDate.getHours();
+                console.log(this.curDate.getTime());
+                let curTime=this.curDate.getTime()
+                this.curDate.setTime(curTime+1000*60*60)
+                // this.curDate=cu(curTime+1000*60*60)
+            },
+            nextHours(){
+
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

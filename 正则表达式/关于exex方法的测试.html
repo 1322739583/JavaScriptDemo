@@ -1,0 +1,20 @@
+<html>
+<body>
+
+<script type="text/javascript">
+    //exec方法必须通过new RegExp来使用，直接写表达式然后执行exec是只能处理单条数据的
+    //见第三个js文件
+    var str = "Visit W3School, W3School is a place to study web technology.";
+    var patt = new RegExp("W3School","g");
+    var result;
+
+    while ((result = patt.exec(str)) != null)  {
+        document.write(result);
+        document.write("<br />");
+        document.write(patt.lastIndex);
+        document.write("<br />");
+    }
+</script>
+
+</body>
+</html>
