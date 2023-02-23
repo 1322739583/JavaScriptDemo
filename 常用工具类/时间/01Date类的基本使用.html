@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>-->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!--<link rel="stylesheet" href="/common/css/reset.css">-->
+
+    <style rel="stylesheet">
+        #content {
+
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+
+</div>
+<script type="text/javascript">
+    var element = document.getElementById("content");
+    var date=new Date()
+
+    function time(){
+        return new Date()
+    }
+
+    setInterval(function (){
+        element.innerHTML=new new Date().toLocaleTimeString()
+        console.log(date.toLocaleTimeString())
+    },1000)
+
+
+
+    //是受系统时间影响的。
+
+    //Wed Dec 07 2022 13:05:00 GMT+0800 (中国标准时间)
+    console.log(new Date())
+    //Fri Mar 25 2022 08:00:00 GMT+0800 (中国标准时间),从0点0分开始算，加上时区
+    console.log(new Date("2022-03-25"))
+    //Fri Mar 25 2022 00:00:00 GMT+0800 可以输出精确时间
+    console.log(new Date("2022-03-25:00:00:00"))
+    console.log(new Date("October 13, 2014 11:13:00"));
+
+    let year = 2022, month = 6, day = 13
+    let hours = 5, minutes = 12, seconds = 55
+    let milliseconds=500
+
+    console.log(new Date(year, month));
+    console.log(new Date(year, month, day));
+    console.log(new Date(year, month, day, hours));
+    console.log(new Date(year, month, day, hours, minutes));
+    console.log(new Date(year, month, day, hours, minutes, seconds));
+    //直接输出是看不出毫秒的
+    console.log(new Date(year, month, day, hours, minutes, seconds, milliseconds));
+    //js是用13位毫秒值来表示时间的。
+    new Date(milliseconds)
+
+
+
+    //Wed Dec 07 2022
+    console.log(new Date().toDateString());
+    //Wed, 07 Dec 2022 05:21:52 GMT
+    console.log(new Date().toUTCString());
+    //2022-12-07T05:22:06.203Z
+    console.log(new Date().toISOString());
+    //2022/12/7 13:22:44
+    console.log(new Date().toLocaleString());
+    //2022/12/7
+    console.log(new Date().toLocaleDateString());
+    //13:22:44  这个还是有点用的
+    console.log(new Date().toLocaleTimeString());
+
+    //年 用这个就行了，下面那个历史问题。
+    console.log(new Date().getFullYear())
+    //好像已经删除了，但还是可以运行的，年份-1990，从java抄过来的
+    //console.log(new Date().getYear())
+    //月
+    console.log(new Date().getMonth())
+    //天数 从0开始算，历史问题，从java抄过来的
+    console.log(new Date().getDate())
+    //时
+    console.log(new Date().getHours())
+    //分
+    console.log(new Date().getMinutes())
+    //秒
+    console.log(new Date().getSeconds())
+    //毫秒
+    console.log(new Date().getMilliseconds())
+    //总毫秒数
+    console.log(new Date().getTime())
+    //一周中的第几天 从0开始算，星期天为0
+    console.log(new Date().getDay())
+
+
+    //UTC系列方法和没有UTC的系列方法的区别就是UTC是返回原子钟的时间，一种非常精确的时间。GMT格林尼治时间时间是存在误差的。
+    //就是因为相差几个小时，所以年，月，日，小时都是有影响的。
+    //要做肯定是做全套，所以别的没什么区别的方法也都有UTC版本
+    console.log(new Date().getUTCFullYear());
+    console.log(new Date().getUTCMonth());
+    console.log(new Date().getUTCDay());
+    console.log(new Date().getUTCHours());
+
+
+
+</script>
+
+</body>
+</html>

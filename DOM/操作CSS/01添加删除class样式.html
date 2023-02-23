@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>-->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!--<link rel="stylesheet" href="/common/css/reset.css">-->
+
+    <style rel="stylesheet">
+        #content {
+            width: 200px;
+            height: 200px;
+            background-color: lightgreen;
+        }
+        .hidden{
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<div id="content">
+
+</div>
+<button class="btnShow">显示/隐藏</button>
+<script type="text/javascript">
+         let content=document.getElementById("content")
+         let btnShow=document.querySelector(".btnShow")
+         let isHidden=false
+         btnShow.addEventListener("click",()=>{
+             console.log("click")
+             if (!isHidden){
+                 content.classList.add("hidden")
+                 isHidden=true
+             }else {
+                 content.classList.remove("hidden")
+                 isHidden=false
+             }
+         })
+
+</script>
+
+</body>
+</html>

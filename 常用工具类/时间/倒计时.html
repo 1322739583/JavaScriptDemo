@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style rel="stylesheet">
+        #content {
+
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+    {{date.toLocaleTimeString()}}
+    <button @click="onClick">开始计时</button>
+</div>
+<script type="text/javascript">
+    const app = new Vue({
+        el: "#content",
+        data: {
+            message: "hello",
+            date: new Date()
+        },
+        methods: {
+            countDown() {
+                setInterval(()=>{
+                    let timestamp = this.date.getTime()
+                    console.log(timestamp)
+                    let nextTime = timestamp - 1000
+                    this.date=this.date.setTime(nextTime)
+                },1000)
+            },
+            onClick(){
+                console.log("....")
+                this.countDown()
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
