@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>-->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!--<link rel="stylesheet" href="/common/css/reset.css">-->
+
+    <style rel="stylesheet">
+        #content {
+
+        }
+    </style>
+</head>
+<body>
+<div id="content">
+
+</div>
+<script type="text/javascript">
+    //1.引用赋值
+    //这种非常的好理解，总是使用同一份内存。任何操作都是共同的。
+    // const obj = {
+    //     name: "Tom",
+    //     age: 18,
+    //     friend: {name: "kobe"}
+    // }
+    // const p=obj
+    // p.name="Jack"
+    // p.friend.name="jams"
+    // console.log(obj)
+
+    //2.浅拷贝
+    //对象展开实际上使用的是浅拷贝
+    // const obj = {
+    //     name: "Tom",
+    //     age: 18,
+    //     friend: {name: "kobe"}
+    // }
+    // const p={...obj}
+    // p.name="Jack"
+    // p.friend.name="jams"
+    // console.log(obj)
+    // console.log(p)
+
+    //3.深拷贝
+    //js是没有提供深拷贝功能的。
+    //方式一：第三方库
+    //方式二：自己实现
+    //方式三：利用现有机制（JSON）
+    const obj = {
+        name: "Tom",
+        age: 18,
+        friend: {name: "kobe"}
+    }
+    const p=JSON.parse(JSON.stringify(obj))
+    console.log(p)
+    p.friend.name="James"
+    console.log(obj)
+
+</script>
+
+</body>
+</html>
