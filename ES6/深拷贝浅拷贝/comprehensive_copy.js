@@ -12,7 +12,6 @@ const complexObj = {
   num: 42,
   bool: true,
   undef: undefined,
-  nul: null,
   sym: Symbol("mySymbol"),
 
   // 2. 引用数据类型
@@ -46,42 +45,15 @@ console.log("\n");
 // ===================================================================
 console.log("---------- 1. 浅拷贝 ----------");
 
-// --- 针对对象(Object)的浅拷贝 ---
 // 方式一：扩展运算符 (最常用)
 const shallowCopy1 = { ...complexObj };
 
 // 方式二：Object.assign
 const shallowCopy2 = Object.assign({}, complexObj);
 
-// 方式三：手写 for...in 循环 (基础实现)
-function manualShallowClone(source) {
-  const target = {};
-  for (let key in source) {
-    if (Object.prototype.hasOwnProperty.call(source, key)) {
-      target[key] = source[key];
-    }
-  }
-  return target;
-}
-const shallowCopy3 = manualShallowClone(complexObj);
-
-// --- 针对数组(Array)的浅拷贝 ---
-const testArr = [1, 2, { a: 3 }];
-// 方式四：数组的 slice 方法
-const arrCopy1 = testArr.slice();
-// 方式五：数组的 concat 方法
-const arrCopy2 = [].concat(testArr);
-// 方式六：Array.from 方法
-const arrCopy3 = Array.from(testArr);
-// 方式七：数组也完全支持扩展运算符
-const arrCopy4 = [...testArr];
-
-// 验证浅拷贝：修改第二层属性，原始对象也会受影响 (不管是对象还是数组)
+// 验证浅拷贝：修改第二层属性，原始对象也会受影响
 shallowCopy1.obj.childName = "CHANGED_BY_SHALLOW";
-arrCopy1[2].a = 999;
-
-console.log("对象浅拷贝验证 - 原对象的 obj.childName:", complexObj.obj.childName); // CHANGED_BY_SHALLOW
-console.log("数组浅拷贝验证 - 原数组的嵌套对象被修改:", testArr[2].a); // 999
+console.log("浅拷贝修改后，原对象的 obj.childName:", complexObj.obj.childName); // 输出 CHANGED_BY_SHALLOW
 console.log("\n");
 
 // ===================================================================
@@ -98,7 +70,6 @@ const jsonTestObj = {
   reg: /test/i,
   func: () => {},
   undef: undefined,
-  nul: null,
   sym: Symbol("sym"),
   normal: "ok",
 };
@@ -109,7 +80,6 @@ console.log("JSON 深拷贝结果 (看看丢失和变形了什么):", jsonCopy);
 // date: "2026-..." (Date 被强制转成了字符串)
 // reg: {}          (RegExp 变成了空对象)
 // func, undef, sym 被直接无视丢弃了！
-// 唯独 nul: null 被原样保留了下来。
 console.log("\n");
 
 // ===================================================================
