@@ -51,9 +51,48 @@ const shallowCopy1 = { ...complexObj };
 // 方式二：Object.assign
 const shallowCopy2 = Object.assign({}, complexObj);
 
+// 方式三：手写循环 (宽容模式 - 遇到非对象直接返回原值)
+function shallowCloneLenient(obj) {
+  if (typeof obj !== "object" || obj === null) return obj;
+  const cloneTarget = Array.isArray(obj) ? [] : {};
+  for (let key in obj) {
+    // 备注：在现代环境 (ES2022+) 中，可以使用更简洁的 Object.hasOwn(obj, key) 来完全替代下面这行冗长的代码
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      cloneTarget[key] = obj[key];
+    }
+  }
+  return cloneTarget;
+}
+const shallowCopy3 = shallowCloneLenient(complexObj);
+console.log("宽容模式传数字测试:", shallowCloneLenient(123)); // 正常打印 123
+
+// 方式四：手写循环 (严格模式 - 遇到非对象直接抛出异常)
+function shallowCloneStrict(obj) {
+  if (typeof obj !== "object" || obj === null) {
+    throw new TypeError("shallowClone 的参数必须是一个对象或数组！");
+  }
+  const cloneTarget = Array.isArray(obj) ? [] : {};
+  for (let key in obj) {
+    // 备注：在现代环境 (ES2022+) 中，可以使用更简洁的 Object.hasOwn(obj, key) 来完全替代下面这行冗长的代码
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      cloneTarget[key] = obj[key];
+    }
+  }
+  return cloneTarget;
+}
+
+try {
+  shallowCloneStrict(123);
+} catch (e) {
+  console.log("严格模式传数字拦截成功:", e.message); // 打印异常信息
+}
+
 // 验证浅拷贝：修改第二层属性，原始对象也会受影响
 shallowCopy1.obj.childName = "CHANGED_BY_SHALLOW";
+shallowCopy3.arr[0] = "MODIFIED";
+
 console.log("浅拷贝修改后，原对象的 obj.childName:", complexObj.obj.childName); // 输出 CHANGED_BY_SHALLOW
+console.log("浅拷贝修改后，原对象的 arr[0]:", complexObj.arr[0]); // 输出 MODIFIED
 console.log("\n");
 
 // ===================================================================
