@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue3 + MutationObserver 防篡改防删除水印演示</title>
+  <!-- 引入 Vue 3 CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #f4f6f9;
+      color: #333;
+      padding: 30px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: #1e293b;
+    }
+    .subtitle {
+      color: #64748b;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    .demo-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .demo-card h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #0f172a;
+    }
+    .mock-data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    .mock-data-table th, .mock-data-table td {
+      border: 1px solid #cbd5e1;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 14px;
+    }
+    .mock-data-table th {
+      background: #f1f5f9;
+      font-weight: 600;
+    }
+    .actions-panel {
+      margin-top: 24px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .actions-panel h4 {
+      color: #1d4ed8;
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    button {
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-danger {
+      background-color: #ef4444;
+      color: #fff;
+    }
+    .btn-danger:hover {
+      background-color: #dc2626;
+    }
+    .btn-warning {
+      background-color: #f59e0b;
+      color: #fff;
+    }
+    .btn-warning:hover {
+      background-color: #d97706;
+    }
+    .log-box {
+      margin-top: 20px;
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 13px;
+      padding: 16px;
+      border-radius: 8px;
+      height: 180px;
+      overflow-y: auto;
+    }
+    .log-item {
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+    .log-time {
+      color: #94a3b8;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>🛡️ 企业级防篡改水印演示系统</h1>
+    <p class="subtitle">核心机制：利用 <strong>MutationObserver 微任务</strong> 实时监听 DOM 树篡改，瞬间完成重绘自愈。</p>
+
+    <!-- 敏感业务数据区域 -->
+    <div class="demo-card">
+      <h3>📁 公司机密薪资与人员档案（模拟敏感页面）</h3>
+      <table class="mock-data-table">
+        <thead>
+          <tr>
+            <th>工号</th>
+            <th>姓名</th>
+            <th>部门</th>
+            <th>保密薪资职级</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A9821</td>
+            <td>张三</td>
+            <td>基础架构研发部</td>
+            <td>T7（机密）</td>
+          </tr>
+          <tr>
+            <td>B4120</td>
+            <td>李四</td>
+            <td>前端技术专家组</td>
+            <td>P8（机密）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 破坏试验区 -->
+    <div class="actions-panel">
+      <h4>🚨 模拟“坏员工”按 F12 恶意篡改 / 隐藏水印：</h4>
+      <div class="btn-group">
+        <button class="btn-danger" @click="simulateRemove">
+          模拟 1：从 DOM 树中强行删除水印节点 (remove())
+        </button>
+        <button class="btn-warning" @click="simulateDisplayNone">
+          模拟 2：篡改 CSS 样式 (display: none)
+        </button>
+        <button class="btn-warning" @click="simulateOpacityZero">
+          模拟 3：篡改透明度 (opacity: 0)
+        </button>
+      </div>
+    </div>
+
+    <!-- 实时防御日志 -->
+    <div class="log-box" ref="logBox">
+      <div class="log-item" v-for="(log, idx) in logs" :key="idx">
+        <span class="log-time">[{{ log.time }}]</span>
+        <span>{{ log.text }}</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref, onMounted, onBeforeUnmount, nextTick } = Vue;
+
+    createApp({
+      setup() {
+        const logs = ref([]);
+        const logBox = ref(null);
+        let watermarkDiv = null;
+        let observer = null;
+        const watermarkId = '__watermark_secure_layer__';
+
+        const addLog = (text) => {
+          const now = new Date().toLocaleTimeString();
+          logs.value.push({ time: now, text });
+          nextTick(() => {
+            if (logBox.value) {
+              logBox.value.scrollTop = logBox.value.scrollHeight;
+            }
+          });
+        };
+
+        // 1. 生成倾斜的水印高清背景图（Canvas）
+        const createWatermarkBase64 = (text) => {
+          const canvas = document.createElement('canvas');
+          canvas.width = 320;
+          canvas.height = 200;
+          const ctx = canvas.getContext('2d');
+          ctx.rotate((-20 * Math.PI) / 180);
+          ctx.font = '15px sans-serif';
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.15)'; // 半透明暗度
+          ctx.fillText(text, 20, 100);
+          return canvas.toDataURL('image/png');
+        };
+
+        // 2. 创建或重置水印层节点
+        const renderWatermark = () => {
+          // 如果旧节点存在，先移除
+          const existEl = document.getElementById(watermarkId);
+          if (existEl) {
+            existEl.remove();
+          }
+
+          const div = document.createElement('div');
+          div.id = watermarkId;
+          const base64Url = createWatermarkBase64('机密信息 张三 9527 - 请勿泄露');
+
+          // 核心样式锁定：铺满屏幕、穿透点击
+          div.style.position = 'fixed';
+          div.style.top = '0';
+          div.style.left = '0';
+          div.style.width = '100vw';
+          div.style.height = '100vh';
+          div.style.zIndex = '999999';
+          div.style.pointerEvents = 'none'; // 让鼠标点击直接穿透到下方内容
+          div.style.backgroundImage = `url(${base64Url})`;
+          div.style.backgroundRepeat = 'repeat';
+          div.style.display = 'block';
+          div.style.opacity = '1';
+
+          document.body.appendChild(div);
+          watermarkDiv = div;
+        };
+
+        // 3. 核心：利用 MutationObserver 监控水印 DOM
+        const startObserve = () => {
+          // 创建观察者实例（每次触发都会在微任务队列中执行！）
+          observer = new MutationObserver((mutationsList) => {
+            for (const mutation of mutationsList) {
+              // 场景 A：监听到水印节点被强行删除了
+              if (mutation.type === 'childList') {
+                const isRemoved = Array.from(mutation.removedNodes).some(
+                  node => node.id === watermarkId
+                );
+                if (isRemoved) {
+                  addLog('⚠️ 警告：检测到水印 DOM 节点被恶意从页面移除！');
+                  addLog('🛡️ [微任务触发] 瞬间重新挂载水印节点！');
+                  resetWatermarkWithProtection();
+                  return;
+                }
+              }
+
+              // 场景 B：监听到水印节点的属性（如 style、class）被恶意篡改了
+              if (mutation.type === 'attributes' && mutation.target.id === watermarkId) {
+                addLog('⚠️ 警告：检测到水印节点的 style 属性被恶意修改（试图隐藏）！');
+                addLog('🛡️ [微任务触发] 瞬间重置安全样式！');
+                resetWatermarkWithProtection();
+                return;
+              }
+            }
+          });
+
+          // 开始监听整个 body，监控子节点增删（childList）以及属性修改（attributes）
+          observer.observe(document.body, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+            attributeFilter: ['style', 'class'] // 专门盯防 style 和 class
+          });
+        };
+
+        // 重置水印并重新绑定防护（防止自我重建引起死循环触发）
+        const resetWatermarkWithProtection = () => {
+          if (observer) {
+            observer.disconnect(); // 先暂时停止监听，防止重绘触发自身循环
+          }
+          renderWatermark();       // 重新挂载
+          startObserve();          // 重新启动监听
+        };
+
+        // 模拟篡改 1：从 DOM 中删除
+        const simulateRemove = () => {
+          const el = document.getElementById(watermarkId);
+          if (el) {
+            addLog('🔨 攻击：尝试执行 el.remove() 物理删除水印...');
+            el.remove();
+          }
+        };
+
+        // 模拟篡改 2：改 style 为 display: none
+        const simulateDisplayNone = () => {
+          const el = document.getElementById(watermarkId);
+          if (el) {
+            addLog('🔨 攻击：尝试修改样式为 display: none...');
+            el.style.display = 'none';
+          }
+        };
+
+        // 模拟篡改 3：改透明度为 0
+        const simulateOpacityZero = () => {
+          const el = document.getElementById(watermarkId);
+          if (el) {
+            addLog('🔨 攻击：尝试修改样式为 opacity: 0...');
+            el.style.opacity = '0';
+          }
+        };
+
+        onMounted(() => {
+          renderWatermark();
+          startObserve();
+          addLog('✅ 水印服务初始化完成，MutationObserver 守护进程已启动。');
+        });
+
+        onBeforeUnmount(() => {
+          if (observer) {
+            observer.disconnect();
+          }
+        });
+
+        return {
+          logs,
+          logBox,
+          simulateRemove,
+          simulateDisplayNone,
+          simulateOpacityZero
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
