@@ -1,4 +1,6 @@
 {
-    "livePreview.defaultPreviewPath": "/数组/slice和splice方法.html",
-    "git.ignoreLimitWarning": true
+    "livePreview.defaultPreviewPath": "/高级/原型/获取原型.html",
+    "git.ignoreLimitWarning": true,
+    "liveServer.settings.host": "127.0.0.1",
+    "liveServer.settings.port": 52333
 }
