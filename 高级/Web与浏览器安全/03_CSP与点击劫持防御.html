@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03_CSP与点击劫持防御</title>
+</head>
+<body>
+    <h1>03_CSP 内容安全策略与点击劫持（Clickjacking）</h1>
+
+    <div style="line-height: 1.8; max-width: 800px;">
+        <h3>一、CSP（Content-Security-Policy 内容安全策略）</h3>
+        <p><strong>本质：</strong>由服务端通过 HTTP 响应头告诉浏览器的一份<strong>【资源访问白名单】</strong>。</p>
+        <p>即使网页被注入了恶意脚本，由于 CSP 的限制，浏览器也会拒绝下载恶意外部代码，或拒绝向恶意外部域名回传数据！</p>
+        
+        <h4>常见配置示例：</h4>
+        <pre><code># 只能加载本域的资源，图片可以从本域和 cdn.example.com 加载：
+Content-Security-Policy: default-src 'self'; img-src 'self' https://cdn.example.com;
+
+# 彻底禁止任何内联脚本（如 &lt;script&gt;alert(1)&lt;/script&gt; 或 onclick 事件）：
+Content-Security-Policy: script-src 'self';</code></pre>
+
+        <hr>
+
+        <h3>二、点击劫持（Clickjacking / UI 覆盖攻击）</h3>
+        <p><strong>攻击方式：</strong>黑客搭建一个诱人的网页（如“免费领 iPhone”），但在网页上层用一个<strong>完全透明的 <code>&lt;iframe&gt;</code></strong> 覆盖了你正常的银行或微博页面。</p>
+        <p>当你以为自己在点击“领奖”按钮时，实际上你的鼠标点在了下层透明 iframe 里的“确认转账”或“一键关注”按钮上！</p>
+
+        <h4>防御手段：</h4>
+        <ul>
+            <li><strong>HTTP 响应头：<code>X-Frame-Options</code></strong>
+                <ul>
+                    <li><code>DENY</code>：绝对禁止任何页面通过 iframe 嵌套本网页；</li>
+                    <li><code>SAMEORIGIN</code>（常用）：只允许同源的页面通过 iframe 嵌套；</li>
+                </ul>
+            </li>
+            <li><strong>现代 CSP 指令：</strong><code>frame-ancestors 'self'</code>。</li>
+        </ul>
+    </div>
+</body>
+</html>
+

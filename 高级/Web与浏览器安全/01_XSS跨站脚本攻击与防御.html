@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01_XSS跨站脚本攻击与防御</title>
+</head>
+<body>
+    <h1>01_XSS 跨站脚本攻击（Cross-Site Scripting）</h1>
+
+    <div style="line-height: 1.8; max-width: 800px;">
+        <h3>一、什么是 XSS？</h3>
+        <p><strong>本质：</strong>黑客把恶意 JavaScript 脚本代码注入到你的网页中，浏览器以为是正常的网页代码并执行了它！</p>
+        <p><strong>危害：</strong>盗取用户 Cookie、窃取密码、假冒用户发帖、挂马挖矿。</p>
+
+        <hr>
+
+        <h3>二、XSS 的三种主要类型：</h3>
+        <ol>
+            <li><strong>存储型 XSS（最危险）</strong>：黑客在论坛发帖或评论区留言，内容包含 <code>&lt;script&gt;steal(document.cookie)&lt;/script&gt;</code>。这串代码被保存进了后端数据库！每当其他用户打开这个帖子时，恶意代码从数据库拉出并在所有人的浏览器里执行！</li>
+            <li><strong>反射型 XSS</strong>：恶意代码藏在 URL 参数里（如 <code>http://site.com/search?q=&lt;script&gt;...&lt;/script&gt;</code>），诱骗受害者点击链接，服务器把参数未经转义直接拼进 HTML 返回执行。</li>
+            <li><strong>DOM 型 XSS</strong>：纯前端代码漏洞（比如使用了 <code>innerHTML</code> 或 <code>document.write</code> 直接插入未经过滤的用户输入）。</li>
+        </ol>
+
+        <hr>
+
+        <h3>三、Vue/前端中如何防御 XSS？</h3>
+        <ul>
+            <li><strong>1. Vue 的天然护甲</strong>：Vue 默认的插值语法 <code>{{ text }}</code> 会自动将 <code>&lt;</code>、<code>&gt;</code> 转义为 HTML 实体编码（<code>&amp;lt;</code>、<code>&amp;gt;</code>），脚本无法执行！</li>
+            <li><strong>2. 慎用 <code>v-html</code>（高危入口）</strong>：必须渲染富文本时，强制使用三方库 <code>DOMPurify</code> 进行消毒清洗：<br>
+                <code>const cleanHtml = DOMPurify.sanitize(dirtyHtml);</code></li>
+            <li><strong>3. 终极防御：Cookie 开启 <code>HttpOnly</code></strong>：<br>
+                后端设置 Cookie 时带上 <code>HttpOnly</code> 标志。即使黑客成功注入了 JS 代码，通过 <code>document.cookie</code> 也<strong>绝对读不到该 Cookie</strong>！</li>
+        </ul>
+    </div>
+
+    <!-- 演示：纯前端转义函数实现 -->
+    <script>
+        // 手写一个最基础的字符转义防 XSS 工具函数
+        function escapeHtml(str) {
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        const maliciousInput = '<script>alert("你的密码被偷了！")<\/script>';
+        console.log("原始输入（有毒）:", maliciousInput);
+        console.log("转义后输出（安全）:", escapeHtml(maliciousInput));
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02_CSRF跨站请求伪造与防御</title>
+</head>
+<body>
+    <h1>02_CSRF 跨站请求伪造（Cross-Site Request Forgery）</h1>
+
+    <div style="line-height: 1.8; max-width: 800px;">
+        <h3>一、什么是 CSRF？</h3>
+        <p><strong>通俗比喻：</strong>【借刀杀人】。</p>
+        <p><strong>原理：</strong>受害者在正规网站 A 登录了，浏览器存了登录 Cookie；此时受害者被诱骗打开了黑客网站 B，黑客网站 B 自动向网站 A 发起转账请求。因为浏览器发请求时会自动带上网站 A 的 Cookie，网站 A 误以为是用户本人在操作，从而执行了恶意操作！</p>
+        <p><strong>注意：</strong>黑客其实<strong>根本拿不到、也看不到你的 Cookie</strong>，黑客只是<strong>盗用了你的身份去发请求</strong>！</p>
+
+        <hr>
+
+        <h3>二、黑客是怎么做到的？</h3>
+        <p>黑客甚至不需要写复杂的 JS 代码，只需要在钓鱼页面埋一个隐藏图片或自动提交表单：</p>
+        <pre><code>&lt;!-- 只要用户打开黑客页面，浏览器自动向银行发起转账 GET 请求！ --&gt;
+&lt;img src="https://bank.com/api/transfer?to=hacker&amp;amount=1000" style="display:none;"&gt;</code></pre>
+
+        <hr>
+
+        <h3>三、企业级实战防御四大手段：</h3>
+        <ol>
+            <li><strong>方案一：开启 Cookie 的 <code>SameSite</code> 属性（最推荐、最主流）</strong>
+                <ul>
+                    <li><code>SameSite=Strict</code>：严格模式，任何第三方网站发起的请求，绝对不带 Cookie；</li>
+                    <li><code>SameSite=Lax</code>（现代 Chrome 默认值）：相对宽松，只有普通的跨站链接跳转（如点击 a 标签导航）才带 Cookie，通过 img、iframe、表单发起的跨站请求一律不带 Cookie！</li>
+                </ul>
+            </li>
+            <li><strong>方案二：CSRF Token 验证</strong>
+                <ul>
+                    <li>服务器给前端页面随机生成一个加密的 <code>token</code> 字符串（放在隐藏表单或响应头）；</li>
+                    <li>前端发请求时，必须在请求头（如 <code>X-CSRF-Token</code>）或请求体手动带上这个 token；</li>
+                    <li>因为黑客在第三方钓鱼网站<strong>无法跨域读取你网站上的 token</strong>，所以黑客发起的伪造请求必然缺少 token，被服务端拒绝！</li>
+                </ul>
+            </li>
+            <li><strong>方案三：验证请求来源头（<code>Origin</code> / <code>Referer</code>）</strong>
+                <ul>
+                    <li>服务器检查 HTTP 请求头中的 <code>Origin</code> 或 <code>Referer</code> 字段，看是不是由自己信任的合法前端域名发起的，如果发现是从 <code>hacker.com</code> 发过来的，直接拦截！</li>
+                </ul>
+            </li>
+            <li><strong>方案四：重要操作强制二次验证</strong>
+                <ul>
+                    <li>转账、改密码、删数据等高危敏感操作，弹窗要求输入<strong>短信验证码</strong>或<strong>刷脸/支付密码</strong>。</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+</body>
+</html>
+
