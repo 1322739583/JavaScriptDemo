@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02_跨域的底层运行机制剖析</title>
+</head>
+<body>
+    <h1>02_跨域时，请求到底发出去没有？</h1>
+    
+    <div style="line-height: 1.8; font-size: 16px; max-width: 800px;">
+        <h3>💡 核心真相与底层运行流水线：</h3>
+        <p>很多开发者误以为：控制台报 CORS 错误 = 请求在前端就被阻止了，压根没发出去。</p>
+        <p><strong>真实情况完全相反：</strong></p>
+        <ol>
+            <li><strong>阶段 1（发送阶段）</strong>：浏览器完全放行，HTTP 请求正常顺着网线飞往后端服务器；</li>
+            <li><strong>阶段 2（服务端处理）</strong>：后端服务器正常接收并解析了请求，甚至执行了数据库写入或业务计算；</li>
+            <li><strong>阶段 3（服务端返回）</strong>：后端将执行结果和数据包封装成 HTTP 响应，传回浏览器；</li>
+            <li><strong>阶段 4（浏览器拦截）💥</strong>：当数据刚到达浏览器入口时，<strong>浏览器“同源策略检查员”</strong>查看响应头，发现没有 <code>Access-Control-Allow-Origin</code> 通行证，当场将响应数据扣押并销毁，并向前端控制台抛出 CORS 红色错误！</li>
+        </ol>
+
+        <hr>
+
+        <h3>⚠️ 为什么 <code>&lt;img&gt;</code>、<code>&lt;script&gt;</code> 不会跨域，只有 Ajax / fetch 会跨域？</h3>
+        <p>同源策略主要限制的是 <strong>【JavaScript 脚本通过代码读取外部资源的数据】</strong>：</p>
+        <ul>
+            <li><code>&lt;img src="https://other.com/a.jpg"&gt;</code>：虽然从外部下载了图片并展示，但 JS 脚本无法直接读取到图片的内部像素二进制数据，所以允许。</li>
+            <li><code>&lt;script src="https://cdn.com/vue.js"&gt;</code>：虽然下载了外部脚本，但浏览器只负责执行它，并不存在跨域读取隐私数据的危险，所以允许（这也是当年 <strong>JSONP</strong> 的原理来源！）。</li>
+            <li><code>fetch('https://other.com/api')</code>：JS 试图直接把返回的 JSON 数据装进变量里读取，存在偷窃隐私和资金安全的风险，<strong>被浏览器严厉拦截</strong>！</li>
+        </ul>
+    </div>
+</body>
+</html>
+

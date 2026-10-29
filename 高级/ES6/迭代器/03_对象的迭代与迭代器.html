@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>03_对象的迭代与迭代器</title>
+</head>
+<body>
+    <script type='text/javascript'>
+        // ========================================================
+        // 知识点：为复杂业务对象定制外部迭代器
+        // 场景：业务对象 profile 内部有许多字段（name, gender, friends...），
+        // 如果我们想按顺序逐步访问其内部的某一特定数据列表（例如 friends 好友名单），
+        // 可以编写一个专门的外部生成函数 creatProfileIterator 来提取迭代器。
+        // ========================================================
+
+        let profile = {
+            friends: ["Tom", "Jack", "Mike"],
+            name: "xiaoming",
+            gender: "male"
+        };
+
+        // 外部辅助工厂函数：接收 profile 对象，返回专门遍历其 friends 的迭代器
+        function creatProfileIterator(profile) {
+            let index = 0; // 记录当前遍历到的好友索引下标
+            
+            const profileIteraror = {
+                next: function () {
+                    // 当索引仍在 friends 数组有效范围内时，产出当前好友
+                    if (index < profile.friends.length) {
+                        const result = { value: profile.friends[index], done: false };
+                        index++;
+                        return result;
+                    }
+                    // 好友遍历完毕
+                    return { done: true };
+                }
+            };
+            return profileIteraror;
+        }
+
+        // 调用生成函数，获取迭代器实例
+        let profileIterator = creatProfileIterator(profile);
+
+        // 手动分步调用 next() 逐个消费好友数据
+        console.log(profileIterator.next().value); // 输出: Tom
+        console.log(profileIterator.next().value); // 输出: Jack
+        console.log(profileIterator.next().value); // 输出: Mike
+    </script>
+</body>
+</html>
+

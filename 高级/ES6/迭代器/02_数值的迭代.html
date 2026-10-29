@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>02_数值的迭代</title>
+</head>
+
+<body>
+    <script type='text/javascript'>
+        // ========================================================
+        // 知识点：为数组封装迭代器
+        // 目标：手写一个工厂函数，传入任意数组，返回一个能够按索引顺序逐项遍历该数组的迭代器。
+        // 原理：利用闭包维护一个当前访问的游标 index，每次调用 next() 访问当前元素后 index++。
+        // ========================================================
+        
+        function createArrayIterator(arr) {
+            // 参数校验：确保传入的是一个数组
+            if (!(arr instanceof Array)) {
+                console.error("请传入数值");
+                return;
+            }
+
+            let index = 0; // 内部私有指针，记录遍历到的下标位置（闭包保存）
+
+            // 构造符合规范的迭代器对象并返回
+            const iterator = {
+                next: function () {
+                    // 当指针还在数组合法范围内时
+                    if (index < arr.length) {
+                        let result = { value: arr[index], done: false };
+                        index++; // 下标自增，推进指针
+                        return result;
+                    }
+                    // 遍历超出数组长度，迭代结束，done 为 true
+                    return { value: "数值长度为：" + arr.length, done: true };
+                }
+            };
+            return iterator;
+        }
+
+        // 测试数组
+        const nums = [12, 5, 66, 77, 18];
+
+        // 获取该数组的迭代器实例
+        let it = createArrayIterator(nums);
+
+        // 通过 while 循环逐个消费数组中的元素
+        let result = it.next();
+        while (!result.done) {
+            console.log(result.value); // 依次打印: 12, 5, 66, 77, 18
+            result = it.next();
+        }
+    </script>
+</body>
+
+</html>
+

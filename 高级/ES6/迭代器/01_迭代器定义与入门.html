@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>01_迭代器定义与入门</title>
+</head>
+
+<body>
+    <script type='text/javascript'>
+        // ========================================================
+        // 知识点：ES6 迭代器协议（Iterator Protocol）
+        // 1. 什么是迭代器？
+        //    迭代器是一个特殊的【指针对象】，用于按顺序遍历数据集合。
+        // 2. 规范要求：
+        //    该对象内部必须包含一个 next() 方法；
+        //    每次调用 next() 都必须返回一个带有如下两个属性的对象：
+        //    - value: 当前迭代步产生的值（任意类型）
+        //    - done: 布尔值，false 表示迭代未结束，true 表示已迭代完毕（value 为 undefined）
+        // ========================================================
+
+        // --------------------------------------------------------
+        // 示例一：【最推荐的新手入门案例：发扑克牌迭代器】
+        // 优点：毫无复杂的算法干扰，纯粹呈现 next()、value 与 done 的交接机制
+        // --------------------------------------------------------
+        const cards = ["红桃A", "黑桃K", "方块Q"];
+        let cardIndex = 0; // 发牌指针，记录发到了哪一张
+
+        const cardIterator = {
+            next: function() {
+                if (cardIndex < cards.length) {
+                    // 还有牌可发：返回牌面，done 标记为 false
+                    return { value: cards[cardIndex++], done: false };
+                } else {
+                    // 牌已发完：返回标准 undefined，done 标记为 true
+                    return { value: undefined, done: true };
+                }
+            }
+        };
+
+        console.log("--- 示例一：发牌器逐步迭代 ---");
+        console.log(cardIterator.next()); // { value: "红桃A", done: false }
+        console.log(cardIterator.next()); // { value: "黑桃K", done: false }
+        console.log(cardIterator.next()); // { value: "方块Q", done: false }
+        console.log(cardIterator.next()); // { value: undefined, done: true } (迭代结束)
+
+
+        // --------------------------------------------------------
+        // 示例二：【MDN 官方参考案例：数值范围迭代器 makeRangeIterator】
+        // 💡 说明：
+        // 1. 出处：这是 Mozilla MDN 官方文档《迭代协议》的第一段演示示例。
+        // 2. 为什么不适合新手直接入门？
+        //    因为该案例混杂了【默认参数】、【步长计算 step】以及【迭代次数统计 iterateCount】等额外数学逻辑，
+        //    初学者容易把精力分散到“算数字”上，反而冲淡了对迭代器协议本身的感知。
+        // 3. 为什么 MDN 要这样举例？（作为进阶参考价值）：
+        //    它展示了迭代器最强大的特性——【惰性求值与无需预先分配内存】。
+        //    比如从 0 到 100 万，如果存数组会消耗巨大内存；而用该迭代器只需要按需逐步计算下一个值，非常优雅！
+        // --------------------------------------------------------
+        function makeRangeIterator(start = 0, end = Infinity, step = 1) {
+            let nextIndex = start;
+            let iterateCount = 0;
+
+            const iterator = { 
+                next: function() {
+                    let result;
+                    if (nextIndex < end) {
+                        result = { value: nextIndex, done: false };
+                        nextIndex += step;
+                        iterateCount++;
+                        return result;
+                    }
+                    return { value: iterateCount, done: true };    
+                }
+            };
+            return iterator;
+        }   
+
+        console.log("--- 示例二：MDN 范围迭代器 (步长为 2) ---");
+        let it = makeRangeIterator(1, 6, 2);
+        let result = it.next();
+        while (!result.done) {
+            console.log(result); // 依次打印: {value: 1, done: false}, {value: 3, done: false}, {value: 5, done: false}
+            result = it.next();
+        }
+    </script>
+</body>
+
+</html>

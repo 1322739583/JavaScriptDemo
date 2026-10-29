@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03_简单请求与OPTIONS预检请求</title>
+</head>
+<body>
+    <h1>03_简单请求 vs 非简单请求（OPTIONS 预检机制）</h1>
+    <p>打开控制台（F12）并在 Network（网络）面板中观察请求。</p>
+
+    <script>
+        // ========================================================
+        // 核心考点：为什么有时候调一个接口，Network 面板里会凭空多出一次 OPTIONS 请求？
+        // 浏览器将跨域请求分为两类：
+        // 1. 【简单请求（Simple Request）】
+        // 2. 【非简单请求（Preflighted Request / 需预检请求）】
+        // ========================================================
+
+        // --------------------------------------------------------
+        // 一、什么是简单请求？（不会触发 OPTIONS，直接发送）
+        // 必须同时满足两大条件：
+        // 1. 请求方法只能是：GET、POST、HEAD
+        // 2. 请求头仅限于基础字段，且 Content-Type 只能是以下三者之一：
+        //    - text/plain
+        //    - multipart/form-data
+        //    - application/x-www-form-urlencoded
+        // --------------------------------------------------------
+
+        // --------------------------------------------------------
+        // 二、什么是非简单请求？（会先自动发一次 OPTIONS 请求！）
+        // 只要满足以下任意一条：
+        // 1. 请求方法为：PUT、DELETE、PATCH 等；
+        // 2. 携带了自定义请求头（例如：Authorization、x-token 等身份凭据）；
+        // 3. Content-Type 为现代化接口最常用的：application/json！
+        // --------------------------------------------------------
+
+        // 演示：发起一个现代典型接口请求（携带 Token + JSON 数据）
+        // 💡 浏览器会先在后台悄悄发出：OPTIONS /api/user
+        // 询问服务器：
+        // - "Access-Control-Request-Method: POST"（你接受 POST 吗？）
+        // - "Access-Control-Request-Headers: authorization, content-type"（你接受这些请求头吗？）
+        // 服务器返回允许（200/204）后，浏览器才会立刻发送第二趟真正的 POST 业务请求！
+
+        function sendModernRequest() {
+            fetch("http://localhost:8080/api/user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",         // 💥 触发非简单请求！
+                    "Authorization": "Bearer my_jwt_token_123"  // 💥 触发非简单请求！
+                },
+                body: JSON.stringify({ name: "张三", role: "admin" })
+            })
+            .then(res => res.json())
+            .then(data => console.log("拿到真实数据:", data))
+            .catch(err => console.log("预检失败或接口不可达:", err.message));
+        }
+
+        sendModernRequest();
+    </script>
+</body>
+</html>
+

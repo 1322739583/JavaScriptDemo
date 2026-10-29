@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>04_自定义可迭代对象与for-of</title>
+</head>
+<body>
+    <script type='text/javascript'>
+        // ========================================================
+        // 知识点：可迭代对象协议（Iterable Protocol）与 for...of 语法
+        // 核心进化：
+        // 1. 在前一个例子中，我们需要借助外部函数 creatProfileIterator(profile) 才能拿到迭代器；
+        // 2. 为什么不能像数组那样直接用 for...of 遍历 profile？因为 profile 默认不是【可迭代对象】！
+        // 3. 如何让任意对象变成【可迭代对象】？
+        //    只要在对象身上定义一个以 [Symbol.iterator] 为属性名的方法，
+        //    且该方法返回一个包含 next() 的标准迭代器对象即可！
+        // ========================================================
+
+        let profile = {
+            friends: ["Tom", "Jack", "Mike"],
+            name: "xiaoming",
+            gender: "male",
+            
+            // 💥 关键点：实现 [Symbol.iterator] 方法，让 profile 升级为可迭代对象！
+            [Symbol.iterator]: function() {
+                let index = 0; // 迭代状态指针
+                
+                const profileIteraror = {
+                    next: function () {
+                        // 遍历 friends 列表
+                        if (index < profile.friends.length) {
+                            const result = { value: profile.friends[index], done: false };
+                            index++;
+                            return result;
+                        }
+                        // 遍历结束
+                        return { done: true };
+                    }
+                };
+                return profileIteraror;
+            }
+        };
+
+        // 💥 当使用 for...of 循环遍历 profile 时：
+        // 1. JS 引擎会自动去 profile 上查找 [Symbol.iterator] 并执行它，拿到迭代器对象；
+        // 2. 引擎在每次循环时自动调用 iterator.next()，把 value 赋值给变量 p；
+        // 3. 一旦返回的 done 变为 true，循环自动终止！
+        for (p of profile) {
+            console.log(p); // 依次打印: "Tom", "Jack", "Mike"
+        }
+
+    </script>
+</body>
+</html>
+

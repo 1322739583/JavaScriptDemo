@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01_什么是同源与跨域</title>
+</head>
+<body>
+    <h1>01_什么是同源策略（Same-Origin Policy）与跨域？</h1>
+    <p>打开控制台（F12 Console）查看详细演示与判断结果。</p>
+
+    <script>
+        // ========================================================
+        // 核心定义：什么是【同源】？
+        // 只有当两个 URL 的【协议 (Protocol)】、【域名 (Host)】、【端口 (Port)】
+        // 三者必须【完全一致】时，才叫同源（Same-Origin）！
+        // 只要有任何一个不同，就是【跨域（Cross-Origin）】！
+        // ========================================================
+
+        // 假设当前网页的地址为：http://www.example.com:8080/index.html
+
+        const currentOrigin = {
+            protocol: "http:",
+            host: "www.example.com",
+            port: "8080"
+        };
+
+        // 对比列表：判断是否跨域
+        const testUrls = [
+            { url: "http://www.example.com:8080/user/info", reason: "同源（协议、域名、端口全相同，路径不同不影响）", isCross: false },
+            { url: "https://www.example.com:8080/index.html", reason: "跨域！协议不同（http vs https）", isCross: true },
+            { url: "http://api.example.com:8080/index.html", reason: "跨域！域名不同（子域名 api 与 www 不同）", isCross: true },
+            { url: "http://example.com:8080/index.html", reason: "跨域！主域名与二级域名不同", isCross: true },
+            { url: "http://www.example.com:3000/index.html", reason: "跨域！端口不同（8080 vs 3000，前后端分离常见痛点）", isCross: true },
+            { url: "http://127.0.0.1:8080/index.html", reason: "跨域！即使 127.0.0.1 指向本机，只要字面域名不同就是跨域！", isCross: true }
+        ];
+
+        console.table(testUrls);
+
+        // ========================================================
+        // 演示：尝试向外部不同源接口直接发起请求
+        // 浏览器会在控制台报著名的 CORS 错误：
+        // "Access to fetch at '...' from origin '...' has been blocked by CORS policy"
+        // ========================================================
+        console.log("--> 正在尝试向跨域接口发起请求...");
+        fetch("http://localhost:9999/api/test")
+            .then(res => res.json())
+            .then(data => console.log("拿到数据:", data))
+            .catch(err => {
+                console.error("💥 触发了浏览器的跨域拦截报错:", err.message);
+                console.warn("💡 注意：跨域是【浏览器安全限制】，不是 JavaScript 的语法错误！");
+            });
+    </script>
+</body>
+</html>
+
